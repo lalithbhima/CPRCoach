@@ -1,0 +1,24 @@
+{
+  "source": "AHA-aligned vision validation targets",
+  "compression_rate_cpm": {"min": 100, "max": 120, "ideal": 110},
+  "compression_depth_cm": {"min": 5.0, "max": 6.0, "ideal": 5.5},
+  "hand_placement_tolerance": 0.08,
+  "elbow_angle_min_degrees": 165,
+  "recoil_ratio_min": 0.65,
+  "paper_mape_rate_percent": 1.82,
+  "paper_mse_depth_cm2": 0.32,
+  "paper_precision": 0.944,
+  "paper_recall": 0.9897,
+  "paper_f1": 0.9663,
+  "paper_latency_ms": 28,
+  "training_data_sources": [
+    "YouTube professional CPR demonstrations",
+    "Custom manikin recordings (Roboflow labeled)",
+    "PubMed/AHA PDFs for RAG knowledge base"
+  ],
+  "joint_names_yolo17": [
+    "nose", "neck", "left_shoulder", "right_shoulder", "left_elbow", "right_elbow",
+    "left_wrist", "right_wrist", "left_hip", "right_hip", "left_knee", "right_knee",
+    "left_ankle", "right_ankle", "root"
+  ]
+}

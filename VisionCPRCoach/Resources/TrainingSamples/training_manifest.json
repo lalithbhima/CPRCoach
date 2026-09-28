@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "description": "Reference poses for vision threshold calibration",
+  "samples": [
+    {
+      "id": "ideal_adult_cpr",
+      "description": "Adult CPR - centered hands, straight arms",
+      "target_cpm": 110,
+      "target_depth_cm": 5.5,
+      "hand_placement": "centered",
+      "wrist_separation_normalized": 0.08,
+      "elbow_angle_min": 168,
+      "notes": "Use manikin + force sensor to validate depth against these targets"
+    },
+    {
+      "id": "shallow_compress",
+      "description": "Common error - insufficient depth",
+      "wrist_amplitude_max": 0.035,
+      "expected_feedback_key": "push_deeper"
+    },
+    {
+      "id": "off_center_left",
+      "description": "Hand placement too far left of sternum",
+      "horizontal_offset_threshold": -0.10,
+      "expected_feedback_key": "hands_right"
+    }
+  ],
+  "roboflow_dataset_url": "https://universe.roboflow.com/search?q=cpr+pose",
+  "youtube_search_queries": [
+    "AHA hands only CPR official",
+    "CPR training manikin compression",
+    "bystander CPR technique demonstration"
+  ]
+}

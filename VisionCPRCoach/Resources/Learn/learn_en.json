@@ -1,0 +1,127 @@
+{
+  "modules": [
+    {
+      "id": "assess",
+      "title": "Primary Assessment & Scene Safety",
+      "summary": "Scene control, responsiveness, breathing, EMS activation",
+      "icon": "eye.fill",
+      "colorName": "orange",
+      "overview": "The primary survey establishes whether a patient has a life-threatening condition requiring immediate intervention. Per international BLS standards, the rescuer must ensure personal and scene safety, confirm unresponsiveness, assess breathing for no more than 10 seconds, and activate the emergency response system without delay.",
+      "bullets": [
+        "Scene safety first: scan for traffic, fire, electrical hazards, violence, or unstable structures before approaching.",
+        "Use standard precautions when available — gloves, mask, eye protection — to reduce exposure to blood and body fluids.",
+        "Tap the shoulder firmly and shout \"Are you okay?\" in both ears.",
+        "Unresponsive patients with only groaning or non-purposeful movement should be treated as unresponsive for CPR decisions.",
+        "Assess breathing by looking at the chest for no more than 10 seconds; do not confuse agonal gasping with normal breathing.",
+        "Agonal gasps are infrequent, irregular, and ineffective; they indicate cardiac arrest and require immediate CPR.",
+        "For lay rescuers, if unresponsive and not breathing normally, start CPR.",
+        "Activate emergency services immediately; assign a specific bystander to call and another to retrieve an AED if possible.",
+        "Single rescuer: call EMS before starting CPR for adults; for children, perform 2 minutes of CPR first if you are alone.",
+        "Every minute without CPR reduces survival by 7–10%."
+      ],
+      "steps": [
+        "Ensure the scene is safe for you, the victim, and bystanders.",
+        "Check responsiveness: tap shoulders and shout.",
+        "If unresponsive, shout for help and send someone to call emergency services and get an AED.",
+        "Open the airway with head-tilt chin-lift if trained and no spinal injury is suspected.",
+        "Look, listen, and feel for breathing for no more than 10 seconds.",
+        "If not breathing normally or only gasping, begin CPR starting with compressions.",
+        "If breathing normally, place in recovery position and monitor until EMS arrives."
+      ]
+    },
+    {
+      "id": "compress",
+      "title": "Chest Compressions & Technique",
+      "summary": "Anatomy, hand position, rate, depth, recoil, ventilation",
+      "icon": "hands.clap.fill",
+      "colorName": "red",
+      "overview": "High-quality chest compressions are the single most important intervention in cardiac arrest. Compressions generate coronary perfusion pressure and cerebral blood flow. This module covers rate, depth, recoil, and minimizing interruptions.",
+      "bullets": [
+        "Cardiac arrest stops effective pumping; compressions substitute as an external pump maintaining minimal circulation.",
+        "Coronary perfusion pressure depends on compression depth, full recoil, and minimal hands-off time.",
+        "Hand placement: lower half of the sternum, heel of one hand, second hand on top, fingers interlaced and raised off ribs.",
+        "Compress straight down — angled force reduces depth and increases rib fracture risk.",
+        "Adult depth: at least 5 cm and no more than 6 cm; inadequate depth is the most common error.",
+        "Rate: 100–120 compressions per minute.",
+        "Full chest recoil allows the heart to refill; do not lean on the chest between compressions.",
+        "Compression fraction should exceed 80%; pause less than 10 seconds for any reason.",
+        "Compression-only CPR is effective for adult sudden cardiac arrest.",
+        "Conventional CPR with rescue breaths (30:2) when trained and willing.",
+        "Switch compressors every 2 minutes or sooner when fatigued.",
+        "Infant: two fingers or two-thumb technique, ~4 cm depth; Child: one or two hands, ~5 cm depth."
+      ],
+      "steps": [
+        "Kneel beside the victim; shoulders directly over hands, arms straight, elbows locked.",
+        "Place hands on the center of the chest, lower half of the sternum.",
+        "Push hard and fast: 5–6 cm deep at 100–120 per minute.",
+        "Allow complete chest recoil after every compression — do not lean.",
+        "Minimize interruptions; pre-charge AED during compressions when possible.",
+        "If trained, give 2 rescue breaths after every 30 compressions.",
+        "Rotate rescuers every 2 minutes to maintain quality.",
+        "Continue until AED arrives, EMS takes over, or the victim shows signs of life."
+      ]
+    },
+    {
+      "id": "quality",
+      "title": "CPR Quality, Physiology & Technology",
+      "summary": "Perfusion science, metrics, fatigue, and real-time feedback",
+      "icon": "chart.bar.fill",
+      "colorName": "blue",
+      "overview": "CPR quality is measurable and directly linked to survival. Vision CPR Coach uses computer vision to estimate rate, depth, hand placement, and recoil in real time during training.",
+      "bullets": [
+        "Five determinants of high-quality CPR: rate, depth, full recoil, minimal interruptions, correct hand placement.",
+        "Diastolic blood pressure during CPR reflects coronary perfusion.",
+        "Hands-off intervals must not exceed 10 seconds.",
+        "Pre-charging the defibrillator during compressions reduces pause time.",
+        "Metronomes and real-time feedback improve compression rate adherence.",
+        "Rescuer fatigue causes shallow compressions within 60–90 seconds.",
+        "Two-rescuer CPR allows fewer pauses.",
+        "Post-ROSC care includes avoiding hyperventilation and treating reversible causes.",
+        "Reversible causes (H's and T's): hypovolemia, hypoxia, acidosis, electrolyte imbalance, hypothermia; tension pneumothorax, tamponade, toxins, thrombosis.",
+        "This app estimates rate from wrist motion, depth from amplitude with calibration, and hand placement from pose geometry."
+      ],
+      "steps": [
+        "Monitor compression rate continuously — target 100–120 CPM.",
+        "Verify depth on every cycle — at least 5 cm for adults.",
+        "Watch for incomplete recoil and leaning between compressions.",
+        "Keep hands centered on the lower sternum throughout the session.",
+        "Maintain elbow extension — bent elbows reduce transmitted force.",
+        "Limit pauses: bundle rhythm checks, breaths, and pad placement efficiently.",
+        "Switch rescuers before quality drops.",
+        "Use live feedback to correct technique in real time during training."
+      ]
+    },
+    {
+      "id": "aed",
+      "title": "AED, EMS Integration & Post-Arrest Care",
+      "summary": "Defibrillation, team roles, ROSC, and termination of resuscitation",
+      "icon": "bolt.heart.fill",
+      "colorName": "green",
+      "overview": "Automated external defibrillators analyze cardiac rhythm and deliver shock when indicated. Early defibrillation is critical for shockable rhythms. This module covers AED use, EMS coordination, and post-arrest care.",
+      "bullets": [
+        "Shockable rhythms are the most treatable causes of sudden cardiac arrest.",
+        "AED use is safe for lay rescuers — the device will not advise a shock unless indicated.",
+        "Turn on the AED first; follow voice and visual prompts; bare the chest and dry skin if wet.",
+        "Pad placement: follow the diagram on the pads.",
+        "Clear the victim during rhythm analysis and shock delivery.",
+        "Resume CPR immediately after shock delivery.",
+        "If no shock advised, resume CPR immediately.",
+        "CPR continues until EMS assumes care, the victim moves or breathes normally, or you are exhausted.",
+        "Signs of ROSC: purposeful movement, normal breathing, coughing, or pulse when trained to check.",
+        "After ROSC: recovery position if breathing normally, monitor airway, keep warm.",
+        "Do not stop CPR prematurely for brief movements or gasping.",
+        "Good Samaritan laws protect rescuers acting in good faith in most jurisdictions."
+      ],
+      "steps": [
+        "Continue high-quality CPR while an AED is retrieved and turned on.",
+        "Expose the chest; attach pads as shown on the AED diagram.",
+        "Clear everyone during analysis — AED will advise shock or no shock.",
+        "If shock advised: clear, deliver shock, then immediately resume CPR for 2 minutes.",
+        "If no shock: immediately resume CPR.",
+        "Follow AED prompts for re-analysis cycles; minimize hands-off time.",
+        "Coordinate with EMS on arrival — report downtime, shocks given, medications if any.",
+        "If victim becomes responsive and breathes normally, place in recovery position and monitor."
+      ]
+    }
+  ]
+}

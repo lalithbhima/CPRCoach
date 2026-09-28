@@ -1,0 +1,7 @@
+{
+  "languages": 45,
+  "examples": 3152,
+  "manifest": "VisionCPRCoach/Resources/TrainingSamples/whisper_finetune_manifest.jsonl",
+  "model_recommended": "openai/whisper-small",
+  "on_device_deploy": "Use whisperkittools to convert fine-tuned checkpoint to Core ML, then set modelRepo in WhisperKitConfig"
+}

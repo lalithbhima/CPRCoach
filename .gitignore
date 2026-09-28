@@ -1,0 +1,38 @@
+# API keys and local secrets — never commit
+Config/secret.ts
+VisionCPRCoach/Config/Secrets.swift
+VisionCPRCoach/Resources/secret.ts
+VisionCPRCoach/Resources/openrouter_secret.json
+**/openrouter_secret.json
+.env
+.env.*
+!.env.example
+
+# Xcode / macOS
+.DS_Store
+**/xcuserdata/
+DerivedData/
+*.xcuserstate
+*.moved-aside
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# Swift package / build
+.build/
+**/LocalPackages/**/.build/
+Packages/
+Package.resolved
+*.pcm
+*.swiftmodule
+
+# Python
+.venv/
+.venv-*/
+__pycache__/
+*.pyc
+
+# Local metrics / caches
+.live_metrics.json
+.claude/

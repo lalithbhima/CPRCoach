@@ -1,0 +1,618 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		ED3B1D372FCB6ED8006C0F28 /* TensorFlowLite in Frameworks */ = {isa = PBXBuildFile; productRef = MN001SPMPROD00000000001 /* TensorFlowLite */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		EDD6A0BB2F85E30600830393 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EDD6A0A52F85E30500830393 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EDD6A0AC2F85E30500830393;
+			remoteInfo = VisionCPRCoach;
+		};
+		EDD6A0C52F85E30600830393 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EDD6A0A52F85E30500830393 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EDD6A0AC2F85E30500830393;
+			remoteInfo = VisionCPRCoach;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		EDD6A0AD2F85E30500830393 /* VisionCPRCoach.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VisionCPRCoach.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		EDD6A0BA2F85E30600830393 /* VisionCPRCoachTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VisionCPRCoachTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EDD6A0C42F85E30600830393 /* VisionCPRCoachUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VisionCPRCoachUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		EDD6A0AF2F85E30500830393 /* VisionCPRCoach */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = VisionCPRCoach;
+			sourceTree = "<group>";
+		};
+		EDD6A0BD2F85E30600830393 /* VisionCPRCoachTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = VisionCPRCoachTests;
+			sourceTree = "<group>";
+		};
+		EDD6A0C72F85E30600830393 /* VisionCPRCoachUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = VisionCPRCoachUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		EDD6A0AA2F85E30500830393 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ED3B1D372FCB6ED8006C0F28 /* TensorFlowLite in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EDD6A0B72F85E30600830393 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EDD6A0C12F85E30600830393 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		EDD6A0A42F85E30500830393 = {
+			isa = PBXGroup;
+			children = (
+				EDD6A0AF2F85E30500830393 /* VisionCPRCoach */,
+				EDD6A0BD2F85E30600830393 /* VisionCPRCoachTests */,
+				EDD6A0C72F85E30600830393 /* VisionCPRCoachUITests */,
+				EDD6A0AE2F85E30500830393 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		EDD6A0AE2F85E30500830393 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				EDD6A0AD2F85E30500830393 /* VisionCPRCoach.app */,
+				EDD6A0BA2F85E30600830393 /* VisionCPRCoachTests.xctest */,
+				EDD6A0C42F85E30600830393 /* VisionCPRCoachUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		EDD6A0AC2F85E30500830393 /* VisionCPRCoach */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EDD6A0CE2F85E30600830393 /* Build configuration list for PBXNativeTarget "VisionCPRCoach" */;
+			buildPhases = (
+				EDCOPYSECRET00000000001 /* Sync OpenRouter key */,
+				EDD6A0A92F85E30500830393 /* Sources */,
+				EDD6A0AA2F85E30500830393 /* Frameworks */,
+				EDD6A0AB2F85E30500830393 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				EDD6A0AF2F85E30500830393 /* VisionCPRCoach */,
+			);
+			name = VisionCPRCoach;
+			packageProductDependencies = (
+				MN001SPMPROD00000000001 /* TensorFlowLite */,
+			);
+			productName = VisionCPRCoach;
+			productReference = EDD6A0AD2F85E30500830393 /* VisionCPRCoach.app */;
+			productType = "com.apple.product-type.application";
+		};
+		EDD6A0B92F85E30600830393 /* VisionCPRCoachTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EDD6A0D12F85E30600830393 /* Build configuration list for PBXNativeTarget "VisionCPRCoachTests" */;
+			buildPhases = (
+				EDD6A0B62F85E30600830393 /* Sources */,
+				EDD6A0B72F85E30600830393 /* Frameworks */,
+				EDD6A0B82F85E30600830393 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				EDD6A0BC2F85E30600830393 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				EDD6A0BD2F85E30600830393 /* VisionCPRCoachTests */,
+			);
+			name = VisionCPRCoachTests;
+			packageProductDependencies = (
+			);
+			productName = VisionCPRCoachTests;
+			productReference = EDD6A0BA2F85E30600830393 /* VisionCPRCoachTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		EDD6A0C32F85E30600830393 /* VisionCPRCoachUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EDD6A0D42F85E30600830393 /* Build configuration list for PBXNativeTarget "VisionCPRCoachUITests" */;
+			buildPhases = (
+				EDD6A0C02F85E30600830393 /* Sources */,
+				EDD6A0C12F85E30600830393 /* Frameworks */,
+				EDD6A0C22F85E30600830393 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				EDD6A0C62F85E30600830393 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				EDD6A0C72F85E30600830393 /* VisionCPRCoachUITests */,
+			);
+			name = VisionCPRCoachUITests;
+			packageProductDependencies = (
+			);
+			productName = VisionCPRCoachUITests;
+			productReference = EDD6A0C42F85E30600830393 /* VisionCPRCoachUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		EDD6A0A52F85E30500830393 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1640;
+				LastUpgradeCheck = 1640;
+				TargetAttributes = {
+					EDD6A0AC2F85E30500830393 = {
+						CreatedOnToolsVersion = 16.4;
+					};
+					EDD6A0B92F85E30600830393 = {
+						CreatedOnToolsVersion = 16.4;
+						TestTargetID = EDD6A0AC2F85E30500830393;
+					};
+					EDD6A0C32F85E30600830393 = {
+						CreatedOnToolsVersion = 16.4;
+						TestTargetID = EDD6A0AC2F85E30500830393;
+					};
+				};
+			};
+			buildConfigurationList = EDD6A0A82F85E30500830393 /* Build configuration list for PBXProject "VisionCPRCoach" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = EDD6A0A42F85E30500830393;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				MN001SPMREF000000000001 /* XCLocalSwiftPackageReference "LocalPackages/TensorFlowLite" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = EDD6A0AE2F85E30500830393 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				EDD6A0AC2F85E30500830393 /* VisionCPRCoach */,
+				EDD6A0B92F85E30600830393 /* VisionCPRCoachTests */,
+				EDD6A0C32F85E30600830393 /* VisionCPRCoachUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		EDD6A0AB2F85E30500830393 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EDD6A0B82F85E30600830393 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EDD6A0C22F85E30600830393 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		EDCOPYSECRET00000000001 /* Sync OpenRouter key */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Config/secret.ts",
+			);
+			name = "Sync OpenRouter key";
+			outputPaths = (
+				"$(SRCROOT)/VisionCPRCoach/Resources/openrouter_secret.json",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "SECRET=\"${SRCROOT}/Config/secret.ts\"\nOUT=\"${SRCROOT}/VisionCPRCoach/Resources/openrouter_secret.json\"\nif [ ! -f \"$SECRET\" ]; then exit 0; fi\nKEY=$(sed -n 's/.*OPENROUTER_API_KEY[[:space:]]*=[[:space:]]*\"\\([^\"]*\\)\".*/\\1/p' \"$SECRET\" | head -1)\nif [ -z \"$KEY\" ]; then exit 0; fi\nprintf '{\"OPENROUTER_API_KEY\":\"%s\"}\\n' \"$KEY\" > \"$OUT\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		EDD6A0A92F85E30500830393 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EDD6A0B62F85E30600830393 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EDD6A0C02F85E30600830393 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		EDD6A0BC2F85E30600830393 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EDD6A0AC2F85E30500830393 /* VisionCPRCoach */;
+			targetProxy = EDD6A0BB2F85E30600830393 /* PBXContainerItemProxy */;
+		};
+		EDD6A0C62F85E30600830393 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EDD6A0AC2F85E30500830393 /* VisionCPRCoach */;
+			targetProxy = EDD6A0C52F85E30600830393 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		EDD6A0CC2F85E30600830393 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 47K79RBDU2;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		EDD6A0CD2F85E30600830393 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 47K79RBDU2;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		EDD6A0CF2F85E30600830393 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 47K79RBDU2;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "CPR Coach";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Vision CPR Coach uses the camera to analyze CPR hand placement, compression rate, and depth in real time.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Vision CPR Coach uses your location to find the nearest hospitals and emergency rooms.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Vision CPR Coach uses the microphone for voice-guided emergency questions and AI coaching.";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "Vision CPR Coach uses speech recognition so you can answer emergency questions hands-free.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lalithbhima.VisionCPRCoach;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		EDD6A0D02F85E30600830393 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 47K79RBDU2;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "CPR Coach";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Vision CPR Coach uses the camera to analyze CPR hand placement, compression rate, and depth in real time.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Vision CPR Coach uses your location to find the nearest hospitals and emergency rooms.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Vision CPR Coach uses the microphone for voice-guided emergency questions and AI coaching.";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "Vision CPR Coach uses speech recognition so you can answer emergency questions hands-free.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lalithbhima.VisionCPRCoach;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		EDD6A0D22F85E30600830393 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 47K79RBDU2;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lalithbhima.VisionCPRCoachTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/VisionCPRCoach.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/VisionCPRCoach";
+			};
+			name = Debug;
+		};
+		EDD6A0D32F85E30600830393 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 47K79RBDU2;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lalithbhima.VisionCPRCoachTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/VisionCPRCoach.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/VisionCPRCoach";
+			};
+			name = Release;
+		};
+		EDD6A0D52F85E30600830393 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 47K79RBDU2;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lalithbhima.VisionCPRCoachUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = VisionCPRCoach;
+			};
+			name = Debug;
+		};
+		EDD6A0D62F85E30600830393 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 47K79RBDU2;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lalithbhima.VisionCPRCoachUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = VisionCPRCoach;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		EDD6A0A82F85E30500830393 /* Build configuration list for PBXProject "VisionCPRCoach" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EDD6A0CC2F85E30600830393 /* Debug */,
+				EDD6A0CD2F85E30600830393 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EDD6A0CE2F85E30600830393 /* Build configuration list for PBXNativeTarget "VisionCPRCoach" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EDD6A0CF2F85E30600830393 /* Debug */,
+				EDD6A0D02F85E30600830393 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EDD6A0D12F85E30600830393 /* Build configuration list for PBXNativeTarget "VisionCPRCoachTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EDD6A0D22F85E30600830393 /* Debug */,
+				EDD6A0D32F85E30600830393 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EDD6A0D42F85E30600830393 /* Build configuration list for PBXNativeTarget "VisionCPRCoachUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EDD6A0D52F85E30600830393 /* Debug */,
+				EDD6A0D62F85E30600830393 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		MN001SPMREF000000000001 /* XCLocalSwiftPackageReference "LocalPackages/TensorFlowLite" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = LocalPackages/TensorFlowLite;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		MN001SPMPROD00000000001 /* TensorFlowLite */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = MN001SPMREF000000000001 /* XCLocalSwiftPackageReference "LocalPackages/TensorFlowLite" */;
+			productName = TensorFlowLite;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = EDD6A0A52F85E30500830393 /* Project object */;
+}
