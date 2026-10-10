@@ -19,6 +19,9 @@
 - [Overview](#overview)
   - [Problem Statement](#problem-statement)
   - [Our Solution](#our-solution)
+  - [Why we built it](#why-we-built-it)
+  - [Who it is for](#who-it-is-for)
+  - [Impact we aim for](#impact-we-aim-for)
   - [Features](#features)
 - [Technical Details](#technical-details)
   - [System Architecture](#system-architecture)
@@ -80,11 +83,35 @@ Most people never learn CPR because they believe it will never happen to them or
 
 ## Our Solution
 
-CPR Coach stays with a bystander from the moment someone collapses until help arrives. It talks the rescuer through every decision the way a dispatcher would, watches their compressions through the iPhone camera, and speaks short corrections out loud so they never have to look away from the patient. The same live coach is available for practice, so users can build confidence long before an emergency.
+CPR Coach is an iPhone app that stays with a bystander from the moment someone collapses until help arrives. We built it for the person who has never taken a CPR class, never touched a manikin, and suddenly finds themselves as the only one who can save a life.
 
-Our target audience is everyday people who may witness a cardiac arrest and need immediate CPR guidance before emergency responders arrive.
+In an emergency, there is no time to read instructions. So instead, CPR Coach talks to the rescuer the way a dispatcher would. It asks whether the scene is safe, whether the person is responding or breathing, and whether the victim is an adult, a child, or an infant. Then it listens to the answer and decides what comes next. Once compressions begin, the camera watches the rescuer’s form and speaks short corrections out loud — push harder, recenter the hands, hold the rhythm — so the rescuer never has to take their eyes off the person they are trying to save.
 
-CPR Coach is a novel multilingual AI-powered app created by **Lalith Bhima**, **Bhavika Bhima**, and **Yihan Duan**. In our demo, a bystander with no training uses CPR Coach to save a life, and our goal is for the app to help save millions more.
+The app also takes care of the small delays that quietly cost lives. It finds the right emergency number for whatever country the user is in, shows the closest hospitals, and points to the nearest AED using a worldwide database stored right on the phone.
+
+CPR Coach is just as useful before an emergency ever happens. Users can practice with the same live camera coach in an immersive full-screen view, calibrate depth to their own body, and review their corrections after every session. The Learn section walks through assessment, compressions, CPR quality, and AED use out loud, and ChatCPR answers questions and even analyzes live form in many languages.
+
+### Why we built it
+
+CPR is a proven method that can triple the chance of survival. Yet most people never learn it, because they believe cardiac arrest will never happen to them or someone they love. That scenario is not as uncommon as people think, and the scariest part is that there is **no warning**. At the moment of need, people often regret not learning CPR — costing somebody’s life, and leaving their loved ones with the regret of a lifetime.
+
+Our team and many in our community have felt that regret firsthand. We realized that simply telling people to take a class ahead of time is not enough, because there will always be a majority who never do until it is too late. So we asked a different question: what if an unprepared person can still provide high-quality CPR in any moment, with the right guidance in their hand? CPR Coach is our answer.
+
+### Who it is for
+
+Our target audience is everyday people who may witness a cardiac arrest and need immediate guidance before emergency responders arrive — students, parents, coworkers, neighbors, travelers. Whether someone lives in a big city or a rural town, whether they had access to a CPR class or have never seen why learning CPR even mattered, we want them to be able to pull out their phone and act.
+
+Survival should not depend on whether a trained professional happens to be nearby. The person standing right there can be the reason a stranger, a neighbor, or a loved one gets to go home.
+
+### Impact we aim for
+
+Cardiac arrest claims hundreds of thousands of lives each year in the United States and about five million worldwide. Many of those deaths happen outside hospitals, in the minutes before EMS arrives. High-quality bystander CPR is one of the few interventions that can change that outcome on the spot.
+
+CPR Coach aims to close the gap between “I was never trained” and “I can start useful compressions now.” By putting calm voice guidance, live form feedback, and nearest-help tools on a phone people already carry, we believe the app can help bystanders save **millions of lives** over time — not as a clinical claim for any single session, but as the scale of what better access to high-quality CPR makes possible in communities everywhere.
+
+We designed the experience so that panic does not have to mean freeze. One clear question at a time. One clear correction at a time. Practice when life is quiet. Guidance when every second counts.
+
+CPR Coach is a novel multilingual AI-powered app created by **Lalith Bhima**, **Bhavika Bhima**, and **Yihan Duan**. In our demo, a bystander with no training uses CPR Coach to save a life — and our goal is for that story to become ordinary.
 
 ## Features
 
