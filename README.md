@@ -35,6 +35,7 @@
   - [Coaching Margins](#coaching-margins)
   - [Python Prototype Thresholds](#python-prototype-thresholds)
   - [Evaluation](#evaluation)
+  - [Validation](#validation)
   - [Tech Stack](#tech-stack)
 - [Setup and Usage](#setup-and-usage)
   - [Requirements](#requirements)
@@ -308,6 +309,47 @@ On live coaching session exports used for research figures:
 | Precision | 96.89% |
 | Recall | 97.29% |
 | F1 | 97.06 |
+
+### Validation
+
+We validated the live coach on exported practice sessions and manikin trials. The figures below are the graphs we generated for rate error, depth error, coaching reliability, LiDAR impact, form geometry, detection, and production LLM tuning.
+
+**Compression rate — MAPE (2.93%)**
+
+<p align="center">
+  <img src="docs/validation/22_mape_live_coach.png" alt="Live coach MAPE for compression rate" width="720">
+</p>
+
+**Compression depth — MSE (0.31 cm²)**
+
+<p align="center">
+  <img src="docs/validation/23_mse_live_coach.png" alt="Live coach MSE for compression depth" width="720">
+</p>
+
+**Coaching reliability — Precision (96.89%), Recall (97.29%), F1 (97.06)**
+
+<p align="center">
+  <img src="docs/validation/24_precision_live_coach.png" alt="Live coach precision" width="480">
+  <img src="docs/validation/25_recall_live_coach.png" alt="Live coach recall" width="480">
+  <img src="docs/validation/26_f1_live_coach.png" alt="Live coach F1" width="480">
+</p>
+
+**LiDAR depth impact — fusion vs pose-only MSE**
+
+<p align="center">
+  <img src="docs/validation/28_lidar_impact_mse.png" alt="LiDAR fusion MSE compared with pose-only depth" width="720">
+</p>
+
+**End-to-end coaching latency**
+
+<p align="center">
+  <img src="docs/validation/27_end_to_end_latency_cdf.png" alt="End-to-end latency CDF" width="720">
+</p>
+
+**Production LLM / RAG tuning**
+<p align="center">
+  <img src="docs/validation/20_llm_production_tuning_combined.png" alt="Combined production LLM and RAG tuning results" width="720">
+</p>
 
 ## Tech Stack
 
