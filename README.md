@@ -24,6 +24,7 @@
   - [System Architecture](#system-architecture)
   - [AI Models and What They Do](#ai-models-and-what-they-do)
   - [Computer Vision Models](#computer-vision-models)
+  - [Multimodal Fusion and Communication](#multimodal-fusion-and-communication)
   - [Depth and Signal Processing](#depth-and-signal-processing)
   - [Language and Voice Models](#language-and-voice-models)
   - [How the Models Work Together](#how-the-models-work-together)
@@ -152,6 +153,26 @@ CPR Coach is not one model. It is a set of AI models and algorithms that each ha
 | **Apple Vision Hand Pose** | Tracks fingers and palms. Used to tell whether hands are stacked correctly, clenched into a fist, or only one hand is on the chest. |
 | **Rescuer and Patient Classifier** | Our own scoring logic. Scores each person by posture, since the rescuer kneels upright and the patient lies flat, then locks onto the rescuer for the whole session. |
 | **CPR Error Recognition Engine** | Our own 14-class recognizer that labels each moment of CPR as correct or as a specific mistake. See [CPR Error Recognition and Confidence](#cpr-error-recognition-and-confidence). |
+
+### Multimodal Fusion and Communication
+
+The four vision modalities do not publish separate UIs. They write into one shared scene object each frame, and every coaching surface reads from that object.
+
+**Frame entry.** `CameraViewModel` owns the capture path. On standard iPhones it pulls `CMSampleBuffer` frames from `AVCaptureSession`. On LiDAR Pro devices it switches to an `ARSession` with scene depth, converts each `ARFrame` into a portrait-up pixel buffer, and runs the same analyzer. Either way, analysis runs on a background queue so the SwiftUI preview stays at interactive frame rate.
+
+**Per-frame fusion hub.** `MultiPersonPoseAnalyzer` is the only place the modalities meet:
+
+1. **YOLOv11** runs first as a `VNCoreMLRequest` on the bundled `yolo11n` Core ML package (NMS already inside the model). Detections are filtered to CPR-relevant labels and confidence ≥ 0.30. Person boxes become optional patient candidates later.
+2. **MoveNet Thunder** runs next through TensorFlow Lite (256×256 letterboxed input). If shoulders are visible, that pose becomes the primary skeleton and later wrist refinement prefers MoveNet over hand-pose merges.
+3. **Apple Vision** always runs human-rectangle and hand-pose requests on the same `VNImageRequestHandler`. Body pose runs only when MoveNet is not loaded or produced no usable skeleton, so Vision is a true fallback rather than a competing primary.
+4. **Association.** Each skeleton is scored against Vision person boxes by center overlap. Rescuer vs patient scoring uses upright-arm confidence for the rescuer and horizontal torso geometry for the patient. If Vision misses a lying body but YOLO has a horizontal person box below the rescuer’s shoulders, that YOLO box feeds `CPRChestTargetEstimator` for the green chest target.
+5. **Temporal lock.** `PoseTrackingFilter` (One Euro per joint plus short occlusion hold) keeps the rescuer identity sticky across frames so the blue skeleton does not jump mid-compression.
+
+**Shared payload.** The analyzer returns a single `CPRSceneAnalysis`: smoothed rescuer skeleton, patient detection / chest target, rescuer box confidence, hand poses, person count (`max` of skeletons, Vision rects, and YOLO persons), detection quality, raw MoveNet pose for overlay, and YOLO detections / active flag. `CameraViewModel.processScene` is the only consumer of that struct for live coaching.
+
+**Downstream handoff.** From `processScene`, joints go to `CPRMetricsEngine` (rate / depth / elbows / placement / recoil). When LiDAR scene depth is present, depth fuses as approximately **0.72 × LiDAR + 0.28 × camera amplitude** before calibration scaling. Metrics plus the scene feed `CPRActionRecognitionEngine` and `RealTimeCPRResponseEngine`, which emit one spoken cue through `VoiceCoach`. Detection quality shown in the Coach pills includes small bonuses when MoveNet and YOLO contributed that frame. Emergency Voice, ChatCPR, and Progress do not re-run vision; they read the same live metrics / scene state the Coach already produced.
+
+**Coordinate contract.** All boxes and joints stay in Vision-normalized space (origin bottom-left, 0–1). Overlay code maps that space onto the preview using MoveNet’s portrait frame size when available, so YOLO boxes, Vision rects, and MoveNet keypoints stay aligned without a second transform stage.
 
 ### Depth and Signal Processing
 
