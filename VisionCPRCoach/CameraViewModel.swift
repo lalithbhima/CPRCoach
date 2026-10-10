@@ -46,6 +46,8 @@ final class CameraViewModel: NSObject, ObservableObject {
     @Published var usesARCameraPipeline: Bool = false
     @Published var detectionQuality: Double = 0
     @Published var aiModelActive: Bool = false
+    /// Bundled YOLOv11n Core ML model loaded for live scene / person cues.
+    @Published var yoloActive: Bool = false
 
     lazy var emergencyFlow = EmergencyFlowEngine(voiceCoach: voiceCoach)
     lazy var aiCoach = AICoachService()
@@ -63,6 +65,7 @@ final class CameraViewModel: NSObject, ObservableObject {
     func configure() {
         syncLanguage()
         aiModelActive = MoveNetPoseEstimator.shared.isModelLoaded
+        yoloActive = YOLOv11ObjectDetector.shared.isModelLoaded
         metricsEngine.setCalibration(AppConfig.loadCalibration())
         checkCameraPermission()
         speechRecognition.requestAuthorization()

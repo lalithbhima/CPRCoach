@@ -133,6 +133,10 @@ struct CPRSceneAnalysis: Equatable {
     let patientMoveNetPose: MoveNetPose?
     /// Anatomical CPR target built from patient shoulder/hip keypoints.
     let patientCPRTarget: PatientCPRTarget?
+    /// YOLOv11n object / scene cues (person, bed, gear, etc.) for live Coach fusion.
+    let yoloDetections: [YOLODetection]
+    /// True when the bundled YOLOv11 model produced at least one usable detection this frame.
+    let yoloActive: Bool
     let timestamp: TimeInterval
 
     var rescuerJoints: BodyJoints? { rescuer?.toBodyJoints() }

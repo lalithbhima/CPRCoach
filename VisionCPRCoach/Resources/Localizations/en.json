@@ -387,6 +387,7 @@
   "ai_suggest_3": "Where do I place my hands?",
   "ai_suggest_4": "When should I use an AED?",
   "ai_model_badge": "AI Model",
+  "yolo_badge": "YOLOv11",
   "lidar_depth_badge": "LiDAR Depth",
   "voice_didnt_catch": "I didn't catch that.",
   "learn_listen": "Listen to lesson",

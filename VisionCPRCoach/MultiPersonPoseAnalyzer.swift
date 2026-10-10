@@ -5,9 +5,10 @@ import CoreVideo
 import CoreGraphics
 import QuartzCore
 
-/// Single full-frame MoveNet pass + Vision human rects / hands for CPR scene logic.
+/// Full-frame MoveNet + Apple Vision (rects/hands/pose fallback) + YOLOv11 scene cues.
 final class MultiPersonPoseAnalyzer {
     private let moveNet = MoveNetPoseEstimator.shared
+    private let yolo = YOLOv11ObjectDetector.shared
 
     /// Vision body pose — fallback only when MoveNet is unavailable or fails.
     private let poseRequest: VNDetectHumanBodyPoseRequest = {
@@ -48,6 +49,8 @@ final class MultiPersonPoseAnalyzer {
         var livePose: MoveNetPose?
 
         let moveNetPrimary = moveNet.isModelLoaded
+        let yoloDetections = (try? yolo.detect(from: sampleBuffer)) ?? []
+        let sceneYOLO = filterSceneYOLO(yoloDetections)
 
         if moveNetPrimary, let pose = try? moveNet.estimatePose(from: sampleBuffer) {
             livePose = pose
@@ -79,13 +82,15 @@ final class MultiPersonPoseAnalyzer {
 
             let humanRects = humanRectRequest.results ?? []
             let handObservations = handRequest.results ?? []
+            let yoloPersons = sceneYOLO.filter(\.isPerson)
 
             let associations = associateSkeletonsWithRects(skeletons: skeletons, rects: humanRects)
 
             let (rawRescuer, fallbackPatient) = classifyScene(
                 skeletons: skeletons,
                 associations: associations,
-                humanRects: humanRects
+                humanRects: humanRects,
+                yoloPersons: yoloPersons
             )
 
             // Patient gating + sticky lock live in PoseTrackingFilter.
@@ -114,7 +119,8 @@ final class MultiPersonPoseAnalyzer {
                 rescuer: displayRescuer,
                 patient: patient,
                 skeletonCount: skeletons.count,
-                moveNetActive: moveNetUsed
+                moveNetActive: moveNetUsed,
+                yoloActive: !sceneYOLO.isEmpty
             )
 
             let (rescuerBox, rescuerConfidence) = rescuerBoxAndConfidence(
@@ -128,11 +134,13 @@ final class MultiPersonPoseAnalyzer {
                 rescuerBox: rescuerBox,
                 rescuerConfidence: rescuerConfidence,
                 handPoses: hands,
-                personCount: max(skeletons.count, humanRects.count),
+                personCount: max(skeletons.count, humanRects.count, yoloPersons.count),
                 detectionQuality: quality,
                 moveNetPose: livePose,
                 patientMoveNetPose: nil,
                 patientCPRTarget: nil,
+                yoloDetections: sceneYOLO,
+                yoloActive: yolo.isModelLoaded && !sceneYOLO.isEmpty,
                 timestamp: timestamp
             ))
         } catch {
@@ -151,6 +159,8 @@ final class MultiPersonPoseAnalyzer {
         var livePose: MoveNetPose?
 
         let moveNetPrimary = moveNet.isModelLoaded
+        let yoloDetections = (try? yolo.detect(fromPortrait: pixelBuffer)) ?? []
+        let sceneYOLO = filterSceneYOLO(yoloDetections)
 
         if moveNetPrimary, let pose = try? moveNet.estimatePose(fromPortrait: pixelBuffer) {
             livePose = pose
@@ -177,13 +187,15 @@ final class MultiPersonPoseAnalyzer {
 
             let humanRects = humanRectRequest.results ?? []
             let handObservations = handRequest.results ?? []
+            let yoloPersons = sceneYOLO.filter(\.isPerson)
 
             let associations = associateSkeletonsWithRects(skeletons: skeletons, rects: humanRects)
 
             let (rawRescuer, fallbackPatient) = classifyScene(
                 skeletons: skeletons,
                 associations: associations,
-                humanRects: humanRects
+                humanRects: humanRects,
+                yoloPersons: yoloPersons
             )
 
             let rawPatient = fallbackPatient
@@ -210,7 +222,8 @@ final class MultiPersonPoseAnalyzer {
                 rescuer: displayRescuer,
                 patient: patient,
                 skeletonCount: skeletons.count,
-                moveNetActive: moveNetUsed
+                moveNetActive: moveNetUsed,
+                yoloActive: !sceneYOLO.isEmpty
             )
 
             let (rescuerBox, rescuerConfidence) = rescuerBoxAndConfidence(
@@ -224,11 +237,13 @@ final class MultiPersonPoseAnalyzer {
                 rescuerBox: rescuerBox,
                 rescuerConfidence: rescuerConfidence,
                 handPoses: hands,
-                personCount: max(skeletons.count, humanRects.count),
+                personCount: max(skeletons.count, humanRects.count, yoloPersons.count),
                 detectionQuality: quality,
                 moveNetPose: livePose,
                 patientMoveNetPose: nil,
                 patientCPRTarget: nil,
+                yoloDetections: sceneYOLO,
+                yoloActive: yolo.isModelLoaded && !sceneYOLO.isEmpty,
                 timestamp: timestamp
             ))
         } catch {
@@ -331,7 +346,8 @@ final class MultiPersonPoseAnalyzer {
     private func classifyScene(
         skeletons: [FullBodySkeleton],
         associations: [SkeletonAssociation],
-        humanRects: [VNHumanObservation]
+        humanRects: [VNHumanObservation],
+        yoloPersons: [YOLODetection] = []
     ) -> (rescuer: FullBodySkeleton?, patient: PatientDetection?) {
         guard !skeletons.isEmpty else {
             return (nil, nil)
@@ -350,6 +366,10 @@ final class MultiPersonPoseAnalyzer {
                     confidence: Double(patientRect.confidence),
                     rescuer: rescuer
                 ))
+            }
+
+            if let yoloPatient = bestHorizontalYOLOPatient(from: yoloPersons, excluding: rescuer) {
+                return (rescuer, patientFromYOLOBox(yoloPatient, rescuer: rescuer))
             }
 
             if let inferred = CPRChestTargetEstimator.chestTargetUnderHandsIfCPRPosture(rescuer: rescuer) {
@@ -375,6 +395,10 @@ final class MultiPersonPoseAnalyzer {
             )
         }
 
+        if patient == nil, let yoloPatient = bestHorizontalYOLOPatient(from: yoloPersons, excluding: rescuer) {
+            patient = patientFromYOLOBox(yoloPatient, rescuer: rescuer)
+        }
+
         if patient == nil, skeletons.count >= 2 {
             let patientSkeleton = scored
                 .filter { $0.0.skeleton != rescuer }
@@ -392,6 +416,60 @@ final class MultiPersonPoseAnalyzer {
         }
 
         return (rescuer, patient)
+    }
+
+    private func filterSceneYOLO(_ detections: [YOLODetection]) -> [YOLODetection] {
+        detections.filter {
+            YOLOv11ObjectDetector.sceneRelevantLabels.contains($0.label) && $0.confidence >= 0.30
+        }
+    }
+
+    /// Prefer a horizontal YOLO person box as the lying patient when Vision human-rects miss it.
+    private func bestHorizontalYOLOPatient(
+        from detections: [YOLODetection],
+        excluding rescuer: FullBodySkeleton?
+    ) -> YOLODetection? {
+        let rescuerCenter = rescuer?.centerPoint
+            ?? rescuer?.leftShoulder
+            ?? rescuer?.rightShoulder
+
+        let candidates = detections.filter { det in
+            let box = det.boundingBox
+            let isHorizontal = box.width > box.height * 1.15
+            let isLargeEnough = box.width * box.height > 0.025
+
+            var isPatientOnGround = true
+            if let rescuer {
+                let shoulderYs = [rescuer.leftShoulder?.y, rescuer.rightShoulder?.y].compactMap { $0 }
+                if let shoulderY = shoulderYs.max() {
+                    isPatientOnGround = box.midY < shoulderY - 0.02
+                }
+            }
+
+            var notSameAsRescuer = true
+            if let rescuerCenter {
+                let center = CGPoint(x: box.midX, y: box.midY)
+                let distance = hypot(center.x - rescuerCenter.x, center.y - rescuerCenter.y)
+                notSameAsRescuer = distance > 0.04 || isHorizontal
+            }
+
+            return isHorizontal && isLargeEnough && isPatientOnGround && notSameAsRescuer
+        }
+
+        return candidates.max {
+            horizontalPatientScore($0.boundingBox) < horizontalPatientScore($1.boundingBox)
+        }
+    }
+
+    private func patientFromYOLOBox(
+        _ detection: YOLODetection,
+        rescuer: FullBodySkeleton?
+    ) -> PatientDetection {
+        CPRChestTargetEstimator.chestTargetFromHorizontalBodyBox(
+            detection.boundingBox,
+            rescuer: rescuer,
+            confidence: Double(detection.confidence)
+        )
     }
 
     private func bestHorizontalPatientRect(
@@ -521,7 +599,8 @@ final class MultiPersonPoseAnalyzer {
         rescuer: FullBodySkeleton?,
         patient: PatientDetection?,
         skeletonCount: Int,
-        moveNetActive: Bool = false
+        moveNetActive: Bool = false,
+        yoloActive: Bool = false
     ) -> Double {
         var q = 0.0
         if let rescuer { q += rescuer.cprArmConfidence * 55 }
@@ -529,6 +608,7 @@ final class MultiPersonPoseAnalyzer {
         if skeletonCount >= 1 { q += 5 }
         if rescuer != nil && patient != nil { q += 5 }
         if moveNetActive { q += 10 }
+        if yoloActive { q += 5 }
         return min(q, 100)
     }
 
@@ -544,6 +624,8 @@ final class MultiPersonPoseAnalyzer {
             moveNetPose: nil,
             patientMoveNetPose: nil,
             patientCPRTarget: nil,
+            yoloDetections: [],
+            yoloActive: false,
             timestamp: CACurrentMediaTime()
         )
     }

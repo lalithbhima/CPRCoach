@@ -75,6 +75,11 @@ struct ImmersiveCoachView: View {
                         .font(.caption2.weight(.semibold))
                         .foregroundStyle(.white.opacity(0.8))
                 }
+                if vm.yoloActive {
+                    Text(languageManager.text("yolo_badge"))
+                        .font(.caption2.weight(.semibold))
+                        .foregroundStyle(.orange.opacity(0.9))
+                }
                 if vm.lidarDepthActive {
                     Text(languageManager.text("lidar_depth_badge"))
                         .font(.caption2.weight(.semibold))

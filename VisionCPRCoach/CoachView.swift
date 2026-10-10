@@ -97,6 +97,9 @@ struct CoachView: View {
                     if vm.aiModelActive {
                         StatusPill(title: languageManager.text("ai_model_badge"), systemImage: "brain.head.profile", tint: .purple)
                     }
+                    if vm.yoloActive {
+                        StatusPill(title: languageManager.text("yolo_badge"), systemImage: "viewfinder", tint: .orange)
+                    }
                     if vm.lidarDepthActive {
                         StatusPill(title: languageManager.text("lidar_depth_badge"), systemImage: "dot.scope", tint: .cyan)
                     }
