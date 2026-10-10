@@ -30,14 +30,14 @@ https://github.com/user-attachments/assets/placeholder
 
 | | |
 |---|---|
-| 🎯 **MAPE (compression rate)** | **2.93%** on 61 live coaching sessions / 3,999 usable frames |
-| 📐 **MSE (depth)** | **0.31 cm²** with LiDAR–pose fusion |
-| ✅ **Precision / Recall / F1** | **96.89% / 97.29% / 97.06** coaching reliability |
-| 🛰️ **LiDAR depth error cut** | **~77%** vs pose-only (MSE 1.97 vs 8.63 cm²) |
-| 🌍 **Languages** | **45** UI + speech locales |
-| 💓 **AED stations on device** | **166,925** (bundled worldwide GeoJSON) |
-| 🧠 **Vision modalities** | **4** — YOLOv11 · MoveNet · Apple Vision · LiDAR |
-| ⚡ **Design latency** | **&lt;400 ms** end-to-end coaching loop |
+| **MAPE (compression rate)** | **2.93%** on 61 live coaching sessions / 3,999 usable frames |
+| **MSE (depth)** | **0.31 cm²** with LiDAR–pose fusion |
+| **Precision / Recall / F1** | **96.89% / 97.29% / 97.06** coaching reliability |
+| **LiDAR depth error cut** | **~77%** vs pose-only (MSE 1.97 vs 8.63 cm²) |
+| **Languages** | **45** UI + speech locales |
+| **AED stations on device** | **166,925** (bundled worldwide GeoJSON) |
+| **Vision modalities** | **4** — YOLOv11 · MoveNet · Apple Vision · LiDAR |
+| **Design latency** | **&lt;400 ms** end-to-end coaching loop |
 
 ---
 
@@ -57,7 +57,7 @@ https://github.com/user-attachments/assets/placeholder
   - [AI Models, RAG &amp; ChatGPT API](#ai-models-rag--chatgpt-api)
   - [Emergency Voice Flow](#emergency-voice-flow)
 - [Performance Metrics](#performance-metrics)
-- [Research Impact (MTFC / Public Health)](#research-impact-mtfc--public-health)
+- [Impact](#impact)
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
   - [1. Clone and Open](#1-clone-and-open)
@@ -316,7 +316,7 @@ Evaluated on **device-exported** live coaching sessions (idle / unknown frames f
 | **F1** | **97.06** | Harmonic mean |
 | **LiDAR fusion MSE** | **1.969** | vs pose-only **8.627** / SfM **9.02** (~**77%** reduction) |
 | **Mean calibrated depth** | **2.766 cm** | Calibration baseline statistic from eval set |
-| **End-to-end latency goal** | **&lt;400 ms** | Capture → metrics → cue (MTFC design target) |
+| **End-to-end latency goal** | **&lt;400 ms** | Capture → metrics → cue |
 
 Source CSV: `Research Paper/validation_data/cpr_coach_statistics_summary.csv`  
 Figures / sweeps: `Research Paper/graphs/`, `validation_data/hyperparameter_sweep_results.csv`
@@ -325,21 +325,16 @@ Paper-subset reference fields also live in `VisionCPRCoach/Resources/cv_referenc
 
 ---
 
-## Research Impact (MTFC / Public Health)
+## Impact
 
-Actuarial and public-health modeling for the Modeling the Future Challenge / Save a Million Lives context lives under `Research Paper/MTFC_2027/`.
+CPR Coach aims to shrink the gap between “I have never been trained” and “I can start useful compressions now.”
 
-**Illustrative base-case outputs (see report for assumptions):**
+- **Practice before crisis** — Live form feedback builds muscle memory on rate, depth, and hands.
+- **Support during crisis** — Voice AI reduces cognitive load with step-by-step checks and EMS/AED prompts.
+- **Scale** — A phone-based coach can reach populations far beyond classroom certification seats.
+- **Access** — Multilingual UI, on-device AEDs, and offline-capable coaching help communities where classes and equipment are scarce.
 
-| Projection | Value |
-|------------|-------|
-| Year-10 lives saved (base) | **546** |
-| 10-year cumulative | **2,956** |
-| Monte Carlo median (N=10,000) | **3,062** (P5 **1,297**, P95 **6,106**) |
-| Social value (VSL ~$13.7M) | ~**$41.9B** illustrative |
-| SaML ladder combined | ~**986,000** expected lives saved (multi-intervention ladder) |
-
-These are **research projections**, not clinical guarantees. Full narrative: `Research Paper/MTFC_2027/CPR_Coach_MTFC_Project_Report.md` (and PDF/DOCX siblings).
+The product is training and decision support — not a clinical claim of lives saved.
 
 ---
 
@@ -515,7 +510,6 @@ Challenge wrap (demo, research paper, App Inventor) may also live in the APPChal
 | `validation_data/hyperparameter_sweep_results.csv` | Temperature / tokens / RAG-k / confidence winners |
 | `generate_cpr_statistics_figures.py` | Pitch / paper figures |
 | `generate_hyperparameter_tuning_graphs.py` | Sweep plots |
-| `MTFC_2027/run_mortality_model.py` | Actuarial projection |
 
 ---
 
@@ -546,7 +540,7 @@ Import the `.aia` in MIT App Inventor; this is a **frontend exploration**, not t
 - [x] Progress, session export/share, calibration history  
 - [x] Multilingual UI / speech (45 languages)  
 - [x] Hyperparameter tuning for live LLM + pose gates  
-- [x] Research metrics (MAPE, MSE, precision / recall / F1) and MTFC report  
+- [x] Research metrics (MAPE, MSE, precision / recall / F1)  
 - [x] MIT App Inventor frontend packaging for competition demos  
 
 **In progress / near-term**
@@ -637,7 +631,6 @@ High-value areas: localization, accessibility, calibration UX, evaluation script
 - Ultralytics YOLOv11 Core ML packaging used for on-device object cues  
 - OpenAI **ChatGPT API** for grounded conversational assistance  
 - OpenAED-style worldwide AED data contributors  
-- Modeling the Future Challenge / Save a Million Lives research context  
 
 ---
 
@@ -662,7 +655,6 @@ This software is provided for **education and training**. It is **not** a medica
 | iOS app | `VisionCPRCoach/` |
 | CAC responses | [`CAC_Responses.md`](CAC_Responses.md) |
 | Research / metrics | `Research Paper/` |
-| MTFC project report | `Research Paper/MTFC_2027/CPR_Coach_MTFC_Project_Report.pdf` |
 | App Inventor package | `CPRCoach-AppInventor/` |
 | GitHub | [github.com/lalithbhima/CPRCoach](https://github.com/lalithbhima/CPRCoach) |
 
@@ -674,8 +666,8 @@ For collaboration, academic questions, or media requests, open a GitHub issue or
 
 ```text
 Bhima, L. R., & Bhima, B. (2026). Vision CPR Coach: Multimodal AI for
-bystander CPR training and emergency guidance. Congressional App Challenge /
-Modeling the Future Challenge project materials.
+bystander CPR training and emergency guidance. Congressional App Challenge
+project materials.
 ```
 
 ---
