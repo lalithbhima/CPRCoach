@@ -1,681 +1,554 @@
-# CPR Coach
+<p align="center">
+  <img src="VisionCPRCoach/assests/CPRCoachLogo.png" alt="CPR Coach logo" width="160">
+</p>
+
+<h1 align="center">CPR Coach</h1>
 
 <p align="center">
-  <img src="docs/assets/CPRCoachLogo.png" alt="CPR Coach logo" width="220"/>
+  A multilingual, AI-powered iPhone app that guides everyday people through high-quality CPR during a real emergency and helps them practice before one ever happens.
 </p>
 
 <p align="center">
-  <strong>Vision CPR Coach</strong> — a multilingual, on-device computer-vision iPhone app that trains people for high-quality CPR and guides bystanders through real emergencies with live coaching, voice AI, and nearest-help tools.
+  Submitted to the <strong>Congressional App Challenge</strong> by Lalith Bhima, Bhavika Bhima, and Yihan Duan
 </p>
 
 <p align="center">
-  <em>Training and decision support only. Not a medical device. In a real emergency, call 911 (or your local emergency number) immediately.</em>
+  <em>Training guidance only. Not a medical device. In a real emergency, call your local emergency number first.</em>
 </p>
-
-<p align="center">
-  <strong>Congressional App Challenge</strong> · Creators: <strong>Lalithendra Reddy Bhima</strong> &amp; <strong>Bhavika Bhima</strong> · Coach: <strong>Madhava Bhima</strong>
-</p>
-
----
-
-> **Demo Video:** full product walkthrough (Live Coach, Emergency Voice AI, Learn, ChatCPR, vision stack, and evaluation narrative)
-
-https://github.com/user-attachments/assets/placeholder
-
-<video src="docs/media/CPR_Coach_Demo.mp4" controls width="720"></video>
-
-**[Watch CPR Coach Demo (`docs/media/CPR_Coach_Demo.mp4`)](docs/media/CPR_Coach_Demo.mp4)**
-
-**Quick Stats**
-
-| | |
-|---|---|
-| **MAPE (compression rate)** | **2.93%** on 61 live coaching sessions / 3,999 usable frames |
-| **MSE (depth)** | **0.31 cm²** with LiDAR–pose fusion |
-| **Precision / Recall / F1** | **96.89% / 97.29% / 97.06** coaching reliability |
-| **LiDAR depth error cut** | **~77%** vs pose-only (MSE 1.97 vs 8.63 cm²) |
-| **Languages** | **45** UI + speech locales |
-| **AED stations on device** | **166,925** (bundled worldwide GeoJSON) |
-| **Vision modalities** | **4** — YOLOv11 · MoveNet · Apple Vision · LiDAR |
-| **Design latency** | **&lt;400 ms** end-to-end coaching loop |
 
 ---
 
 ## Table of Contents
 
-- [The Problem](#the-problem)
-- [Our Solution](#our-solution)
-  - [Key Features](#key-features)
-  - [Who It Is For](#who-it-is-for)
-- [How It Works](#how-it-works)
-  - [Architecture](#architecture)
-  - [End-to-End Coaching Pipeline](#end-to-end-coaching-pipeline)
-  - [Four Vision Modalities](#four-vision-modalities)
-  - [Technical Highlights: Rescuer–Patient Separation &amp; Depth Fusion](#technical-highlights-rescuerpatient-separation--depth-fusion)
-  - [Metrics Math (Rate, Depth, Elbows, Hands, Recoil)](#metrics-math-rate-depth-elbows-hands-recoil)
-  - [Action Recognition (14 Classes)](#action-recognition-14-classes)
-  - [AI Models, RAG &amp; ChatGPT API](#ai-models-rag--chatgpt-api)
-  - [Emergency Voice Flow](#emergency-voice-flow)
-- [Performance Metrics](#performance-metrics)
-- [Impact](#impact)
-- [Getting Started](#getting-started)
-  - [Prerequisites](#prerequisites)
-  - [1. Clone and Open](#1-clone-and-open)
-  - [2. Configure the ChatGPT API Key](#2-configure-the-chatgpt-api-key)
-  - [3. Build and Run on a Device](#3-build-and-run-on-a-device)
-  - [4. First-Run Walkthrough](#4-first-run-walkthrough)
-  - [5. Practice Session Checklist](#5-practice-session-checklist)
-- [Project Structure](#project-structure)
-- [Scripts &amp; Research Tooling](#scripts--research-tooling)
-- [App Inventor / Appathon Frontend](#app-inventor--appathon-frontend)
-- [Roadmap](#roadmap)
-- [Troubleshooting](#troubleshooting)
-- [Lessons Learned (Hard Problems We Solved)](#lessons-learned-hard-problems-we-solved)
-- [Congressional App Challenge Notes](#congressional-app-challenge-notes)
-- [Contributing](#contributing)
-- [Acknowledgments](#acknowledgments)
-- [License](#license)
-- [Contacts &amp; Links](#contacts--links)
-- [Citation](#citation)
+- [Overview](#overview)
+  - [Problem Statement](#problem-statement)
+  - [Our Solution](#our-solution)
+  - [Features](#features)
+- [Technical Details](#technical-details)
+  - [System Architecture](#system-architecture)
+  - [AI Models and What They Do](#ai-models-and-what-they-do)
+  - [Computer Vision Models](#computer-vision-models)
+  - [Depth and Signal Processing](#depth-and-signal-processing)
+  - [Language and Voice Models](#language-and-voice-models)
+  - [How the Models Work Together](#how-the-models-work-together)
+  - [Scoring and Thresholds](#scoring-and-thresholds)
+  - [AHA Coaching Targets](#aha-coaching-targets)
+  - [Compression Quality Score](#compression-quality-score)
+  - [Pressure Score](#pressure-score)
+  - [CPR Error Recognition and Confidence](#cpr-error-recognition-and-confidence)
+  - [Coaching Margins](#coaching-margins)
+  - [Python Prototype Thresholds](#python-prototype-thresholds)
+  - [Evaluation](#evaluation)
+  - [Tech Stack](#tech-stack)
+- [Setup and Usage](#setup-and-usage)
+  - [Requirements](#requirements)
+  - [Getting Started](#getting-started)
+  - [Step 1: Download the Project](#step-1-download-the-project)
+  - [Step 2: Add Your API Key](#step-2-add-your-api-key)
+  - [Step 3: Open in Xcode](#step-3-open-in-xcode)
+  - [Step 4: Set Up Signing](#step-4-set-up-signing)
+  - [Step 5: Run on Your iPhone](#step-5-run-on-your-iphone)
+  - [Step 6: Your First Coaching Session](#step-6-your-first-coaching-session)
+  - [Running the Python Prototype](#running-the-python-prototype)
+  - [Localization Tools](#localization-tools)
+  - [Running Tests](#running-tests)
+  - [Troubleshooting](#troubleshooting)
+  - [Folder Structure](#folder-structure)
+- [Project Information](#project-information)
+  - [How We Used AI in Development](#how-we-used-ai-in-development)
+  - [Privacy and Permissions](#privacy-and-permissions)
+  - [Roadmap for CPR Coach 2.0](#roadmap-for-cpr-coach-20)
+  - [Disclaimer](#disclaimer)
+  - [Contact and Links](#contact-and-links)
 
 ---
 
-## The Problem
+# Overview
 
-Cardiac arrest can happen anywhere, with no warning. Nearby people often have only seconds to act, and hesitation can be the difference between life and death.
+## Problem Statement
 
-| Scope | Approximate burden |
-|------|---------------------|
-| California | ~65,000 cardiac arrests per year (pitch); CARES-scaled full-state ~28,800 EMS-treated cases |
-| United States | &gt;400,000 public narrative; **263,711** EMS-treated non-traumatic OHCA (CARES 2024) |
-| Global | ~5 million per year |
+Imagine someone you love collapses right in front of you. One moment, everything feels normal. The next, their heart has stopped, and the people nearby have only seconds to act. That hesitation can be the difference between life and death. There is **no warning**, no preparation — only an emergency that needs someone to step in. Most of the time, the person who saves a life is not a doctor. It is a bystander.
 
-Public-health and CARES-aligned facts that motivate the product:
+| Fact | Value |
+|------|-------|
+| Survival boost from bystander CPR | CPR can triple the chance of survival |
+| Out-of-hospital cardiac arrest survival | About 90% of people do not survive |
+| People trained to perform CPR | Less than 3% of the population |
+| Cardiac arrests per year in California | About 65,000 |
+| Cardiac arrests per year in the United States | Over 400,000 |
+| Cardiac arrests per year worldwide | About 5 million |
 
-- Performing bystander CPR can roughly **triple** survival odds versus no CPR.
-- About **90%** of out-of-hospital cardiac arrests do not survive in the public narrative; CARES 2024 reports **10.5%** survival to discharge and **8.2%** favorable neurologic outcome among EMS-treated cases.
-- Fewer than **3%** of people are trained to perform CPR in the narrative we use for outreach; adult bystander CPR is started in only **~41.7%** of CARES cases.
-- Every minute without CPR can reduce survival by roughly **7–10%**.
-- Survival with bystander CPR **13.0%** vs **7.6%** without (CARES 2024).
-- Public AED use remains low (**~9.9%** in California CARES 2024).
-
-Most of the time, the person who can save a life is not a clinician in the room — it is a bystander who needs clear, calm, high-quality guidance **before** EMS arrives.
-
----
+Most people never learn CPR because they believe it will never happen to them or someone they love. Telling people to take a class ahead of time is not enough, because there will always be people who never do. The real question is whether someone with no training can still give high-quality CPR in the moment, with the right guidance in their hand.
 
 ## Our Solution
 
-**CPR Coach (Vision CPR Coach)** is a novel multilingual AI-powered iOS application that:
+CPR Coach stays with a bystander from the moment someone collapses until help arrives. It talks the rescuer through every decision the way a dispatcher would, watches their compressions through the iPhone camera, and speaks short corrections out loud so they never have to look away from the patient. The same live coach is available for practice, so users can build confidence long before an emergency.
 
-1. **Trains** people ahead of time with live camera coaching (rate, depth, hands, elbows, recoil).
-2. **Guides** them during a suspected emergency with a voice assistant that walks through safety checks, EMS activation, AED retrieval, and compressions.
-3. **Educates** with structured Learn modules and ChatCPR (RAG-grounded answers via the ChatGPT API).
-4. **Locates** help via Apple Maps hospitals and a bundled worldwide AED database (**166,925** stations).
+Our target audience is everyday people who may witness a cardiac arrest and need immediate CPR guidance before emergency responders arrive.
 
-The product is built as training and decision support — never as a replacement for certified training or professional care.
+CPR Coach is a novel multilingual AI-powered app created by **Lalith Bhima**, **Bhavika Bhima**, and **Yihan Duan**. In our demo, a bystander with no training uses CPR Coach to save a life, and our goal is for the app to help save millions more.
 
-### Key Features
+## Features
 
-- **Live Coach** — real-time joint tracking (wrists, elbows, shoulders, hips), patient chest guidance box, CPM / depth / elbow / placement / recoil metrics, spoken cues, optional depth calibration, immersive full-screen mode, status pills (Live · AI Detection · AI Model · YOLOv11 · LiDAR Depth).
-- **Four-modality vision** — YOLOv11n scene/person cues, MoveNet Thunder keypoints, Apple Vision pose/rects/hands, LiDAR/ARKit metric depth on Pro devices.
-- **Emergency Voice AI** — dispatcher-style dialogue (scene safety → responsiveness → breathing → call EMS → AED → CPR → recovery) with Apple Speech STT + TTS and ChatGPT API turns grounded by on-device RAG.
-- **Learn** — four professional modules (Primary Assessment, Compressions, CPR Quality/Physiology/Technology, AED/EMS/Post-Arrest) with voice read-along.
-- **ChatCPR** — multilingual Q&amp;A with RAG (`k = 4`), suggestion chips, optional “Analyze my form” using live metrics.
-- **Hospitals &amp; AEDs** — MapKit nearby ERs; distance-ranked AEDs from on-device GeoJSON.
-- **Progress &amp; Calibration** — session scores, charts, export/share, personalized depth scale history.
-- **Multilingual** — **45** languages for UI strings and speech locales, including Emergency yes/no NLP tokens.
+The app is organized into five tabs.
 
-### Who It Is For
+| Tab | What it does |
+|-----|--------------|
+| **Coach** | Live camera coaching. Blue skeletal keypoints track the rescuer's wrists, elbows, shoulders, and hips, and a green guidance box marks the center of the patient's chest. The app measures rate, depth, elbow lock, hand placement, and recoil, then speaks corrections such as pushing harder, recentering the hands, or holding a steady rhythm. Includes an immersive full-screen view. |
+| **Emergency** | A hands-free voice assistant that walks the user through the CPR decision process. It asks whether the scene is safe, whether the person responds or is breathing, and whether the victim is an adult, child, or infant, then listens and decides the next step. Users can call emergency services in one tap. |
+| **Learn** | Guided lessons on assessment, compressions, CPR quality, and AED use, read out loud and based on American Heart Association guidelines. |
+| **Chat (ChatCPR)** | A multilingual AI assistant that answers CPR questions and can analyze live form. |
+| **More** | Nearest hospitals, nearest AEDs, Progress reports, Calibration History, and Settings. |
 
-- Everyday people who may witness cardiac arrest and need guidance before EMS arrives.
-- Students and families practicing on a manikin or training setup.
-- Schools, clubs, and community programs that want a practice companion beside formal certification.
-- Researchers studying multimodal CPR feedback (vision + voice + RAG).
+**Additional highlights**
 
-**Not for:** replacing licensed medical care, diagnosing patients, or delaying a call to emergency services.
+- **Multilingual system.** Every screen, spoken cue, and voice answer is localized across a wide range of languages, from the buttons to the voice that coaches each compression.
+- **Local emergency number.** The app detects the user's country by GPS or device region and dials the correct number.
+- **Worldwide AED locator.** AED stations are loaded from the bundled `WORLD.geojson` database, so the map works without an internet connection.
+- **Progress tracking.** Every practice session is saved with live metric graphs, main corrections, and an AI session summary.
+- **Depth calibration.** Users can calibrate compression depth to their own body.
 
 ---
 
-## How It Works
+# Technical Details
 
-### Architecture
+## System Architecture
 
-```text
-iPhone (Camera + optional LiDAR) + Mic + Speakers
-  │
-  ├─ Camera / ARKit (AVCapture or LiDAR ARSession)
-  │   ├─ RGB frames → MultiPersonPoseAnalyzer
-  │   └─ sceneDepth (Pro) → CompressionDepth3DEstimator
-  │
-  ├─ Vision stack (on-device)
-  │   ├─ YOLOv11n Core ML (VNCoreMLRequest)     — person / scene cues
-  │   ├─ MoveNet Thunder TFLite (256×256)         — primary keypoints
-  │   ├─ Apple Vision body pose / human rects / hands
-  │   └─ PoseTrackingFilter                       — temporal lock-on
-  │
-  ├─ Metrics & coaching
-  │   ├─ CPRMetricsEngine   — CPM · depth · elbows · hands · recoil
-  │   ├─ CPRActionRecognitionEngine — 14 error/correct classes
-  │   └─ RealTimeCPRResponseEngine + VoiceCoach (TTS)
-  │
-  ├─ Language & knowledge
-  │   ├─ LanguageManager (45 locales)
-  │   ├─ RAGRetriever (NLEmbedding + keyword fallback)
-  │   └─ ChatGPT API (ChatCPR + Emergency LLM turns)
-  │
-  └─ Maps / persistence
-      ├─ MapKit hospitals · WORLD.geojson AEDs (166,925)
-      └─ Progress / calibration / session export (on-device)
-```
-
-| Layer | Responsibility | Primary tech |
-|------|----------------|--------------|
-| **UI** | Tabs, immersive coach, glass/bubble design | SwiftUI |
-| **Camera / AR** | Preview + LiDAR scene depth when available | AVFoundation, ARKit |
-| **Vision** | Keypoints, detection, multi-person logic | MoveNet Thunder (TFLite), Apple Vision, YOLOv11n (Core ML) |
-| **Metrics** | CPM, depth, placement, recoil, quality | Custom Swift + peak / zero-cross / FFT fusion |
-| **Voice** | STT / TTS, emergency dialogue, live coach phrases | Apple Speech, AVSpeechSynthesizer |
-| **Language model** | ChatCPR + emergency conversational answers | **ChatGPT API** + on-device RAG |
-| **Maps / AED** | Hospitals and AED stations | MapKit / Apple Maps, `WORLD.geojson` |
-| **Persistence** | Sessions, calibration, language prefs | App sandbox / UserDefaults |
-| **Research / offline** | Figures, MAPE/MSE, hyperparameter sweeps | Python (NumPy, Matplotlib, MoveNet scripts) |
-
-**Main tabs:** Coach · Emergency · Learn · ChatCPR · More (Hospitals, AEDs, Progress, Calibration, Settings).
-
-### End-to-End Coaching Pipeline
-
-1. **Capture** — Camera frame (`AVCapture`) or ARKit camera frame on LiDAR devices (`LiDARDepthSession`).
-2. **Detect (YOLOv11)** — Core ML `yolo11n` via `VNCoreMLRequest` yields person / scene boxes (confidence ≥ 0.30) for CPR-relevant labels (`person`, `bed`, `couch`, gear, etc.).
-3. **Pose (MoveNet)** — Thunder TFLite estimates full-body keypoints; primary path when the model is loaded.
-4. **Fallback / complement (Apple Vision)** — body pose if MoveNet is unavailable; always run human rectangles + hand pose for scene and wrist refinement.
-5. **Depth (LiDAR)** — when supported, ARKit `sceneDepth` estimates 3D compression amplitude; otherwise motion amplitude + **Calibrate**.
-6. **Filter** — `PoseTrackingFilter` stabilizes joints and keeps a sticky rescuer / patient lock.
-7. **Measure** — `CPRMetricsEngine` computes rate, depth, elbows, placement, recoil, quality / confidence.
-8. **Recognize actions** — 14-class taxonomy surfaces the most urgent form error when joints support it.
-9. **Coach** — guideline-gated short TTS cues + UI metrics grid; confidence gates suppress noisy talk.
-10. **Assist** — Emergency / ChatCPR retrieve top-k knowledge chunks (RAG), call the **ChatGPT API** with live metrics when relevant.
-11. **Locate** — Hospitals / AEDs via location + MapKit + GeoJSON.
-12. **Review** — Progress stores session scores for charts, export, and calibration history.
-
-### Four Vision Modalities
-
-| Modality | Asset / API | Role |
-|----------|-------------|------|
-| **YOLOv11n** | `Resources/yolo11n.mlpackage` (~2.8 MB; NMS pipeline; COCO classes) | Object / scene / person cues; strengthens lying-patient boxes when Vision human-rects miss |
-| **MoveNet Thunder** | `movenet_thunder.tflite` (~12 MB, 256×256) | Primary full-body keypoints for the live skeleton overlay |
-| **Apple Vision** | `VNDetectHumanBodyPoseRequest`, human rectangles, hand pose | Pose fallback; person boxes; hand-refined wrists |
-| **LiDAR / ARKit** | `LiDARDepthSession` + `CompressionDepth3DEstimator` | Metric 3D compression depth on Pro / Max devices |
-
-Status pills in Coach UI: **AI Model** (MoveNet loaded) · **YOLOv11** (Core ML loaded) · **LiDAR Depth** (active scene depth) · detection quality %.
-
-### Technical Highlights: Rescuer–Patient Separation &amp; Depth Fusion
-
-**Problem we hit in early builds:** CPR always involves two bodies pressed together. Naive pose models jumped between rescuer and patient; the chest box bounced with the wrists.
-
-**What we ship now:**
-
-1. **Score posture** — rescuer = upright / kneeling with arm confidence; patient = horizontal torso (shoulder–hip geometry or horizontal person box from Vision / YOLO).
-2. **Sticky lock** — `PoseTrackingFilter` holds the rescuer identity across frames instead of re-picking every tick.
-3. **Chest target** — guidance box anchored to patient torso anatomy (or horizontal body box) **below** the compressing hands, not glued to the wrists.
-4. **Occlusion hold** — joints remember last good positions briefly when side-camera wrists disappear behind the chest.
-5. **Depth fusion** — when LiDAR and camera amplitudes exist:
+CPR Coach processes every camera frame through four modalities and connects the results into the live experience on the Coach screen.
 
 ```text
-depth_cm ≈ 0.72 × lidarDepthCm + 0.28 × cameraDepth
+ Camera frame (AVCapture / ARKit)
+        │
+        ▼
+ ┌─────────────────────┐
+ │ 1. Object detection │  YOLOv11 + Apple Vision human rectangles
+ └─────────┬───────────┘  Finds every person in the scene
+           ▼
+ ┌─────────────────────┐
+ │ 2. Pose estimation  │  MoveNet Thunder / Lightning + Apple Vision
+ └─────────┬───────────┘  Body and hand keypoints, rescuer vs patient
+           ▼
+ ┌─────────────────────┐
+ │ 3. Depth mapping    │  LiDAR scene depth (ARKit)
+ └─────────┬───────────┘  Real 3D compression distance in cm
+           ▼
+ ┌─────────────────────┐
+ │ 4. Analysis         │  Rate, depth, elbows, hands, recoil, errors
+ └─────────┬───────────┘
+           ▼
+ Spoken coaching cue + on-screen overlay + saved session data
 ```
 
-Camera-only torso blend (no LiDAR): `0.62 × cameraDepth + 0.38 × torsoDepth`.
+## AI Models and What They Do
 
-6. **Coaching hysteresis** — a mistake must persist across many frames before TTS fires, reducing cognitive overload.
+CPR Coach is not one model. It is a set of AI models and algorithms that each handle one part of the problem, and the app only works because they run together in real time.
 
-### Metrics Math (Rate, Depth, Elbows, Hands, Recoil)
+### Computer Vision Models
 
-AHA-aligned targets encoded in `CPRGuidelines` / `cv_reference_metrics.json` (the LLM does **not** invent clinical thresholds):
+| Model | What it does in CPR Coach |
+|-------|---------------------------|
+| **YOLOv11** | Object detection. Finds the people in the frame so the app knows where the rescuer and patient are before looking at joints. Bundled as Core ML (`yolo11n.mlpackage`). |
+| **MoveNet Thunder (TensorFlow Lite)** | The main pose model. Finds 17 body keypoints such as shoulders, elbows, wrists, and hips at a 256×256 input size, chosen for accuracy. Runs entirely on the phone. |
+| **MoveNet Lightning INT8 (TensorFlow Lite)** | A smaller, faster quantized version of MoveNet used when speed matters more than precision. |
+| **Apple Vision Body Pose** | Backup pose model. Takes over if MoveNet is unavailable, using the newest pose revision the device supports. |
+| **Apple Vision Human Rectangles** | Draws a box around each person. The app matches each skeleton to its box and uses the box confidence to decide who is the rescuer. |
+| **Apple Vision Hand Pose** | Tracks fingers and palms. Used to tell whether hands are stacked correctly, clenched into a fist, or only one hand is on the chest. |
+| **Rescuer and Patient Classifier** | Our own scoring logic. Scores each person by posture, since the rescuer kneels upright and the patient lies flat, then locks onto the rescuer for the whole session. |
+| **CPR Error Recognition Engine** | Our own 14-class recognizer that labels each moment of CPR as correct or as a specific mistake. See [CPR Error Recognition and Confidence](#cpr-error-recognition-and-confidence). |
 
-| Quantity | Target / rule |
-|----------|----------------|
-| Compression rate | **100–120 CPM** (ideal ~110); coach below ~95 / above ~125 |
-| Compression depth | **5–6 cm** adults (ideal ~5.5); coach below ~4.6 / above ~6.4 |
-| Elbow angle | Prefer near-locked arms (**≥165°** UI / guideline floor) |
-| Hand placement | Centered within tolerance **0.08** (normalized); labels: Centered, Too Far Left/Right, Too High/Low |
-| Recoil | Full if upward ratio ≥ **0.65**; else Incomplete |
-| Pose / YOLO confidence gate | ~**0.30** before trusting detections for coaching |
+### Depth and Signal Processing
 
-**CPM fusion** (`estimateCPM`) blends four estimators, then applies `rateMeasurementScale` (1.04):
+| Method | What it does in CPR Coach |
+|--------|---------------------------|
+| **LiDAR Depth Mapping (ARKit)** | Measures the distance from the camera to the chest and the hands in 3D, so compression depth is measured in centimeters instead of guessed from flat video. Falls back to ARKit hit testing when scene depth is not available. |
+| **One Euro Filter** | Smooths every joint separately to remove jitter without adding lag. It also holds a joint's last good position for a moment when it is hidden. |
+| **Rate Fusion** | Combines four estimates of compressions per minute so no single method can fail on its own. See the weights below. |
+| **Depth Calibration** | Lets each user calibrate depth to their own body size and camera position. |
 
-| Estimator | Weight |
-|-----------|--------|
+Compression rate is a weighted blend of four methods:
+
+| Method | Weight |
+|--------|--------|
 | Recent peak intervals | 0.38 |
-| Zero-crossings | 0.22 |
-| FFT on wrist vertical motion | 0.30 |
-| Peak count | 0.10 |
+| Discrete Fourier analysis (FFT) of wrist motion | 0.30 |
+| Velocity zero crossings | 0.22 |
+| Long window peak intervals | 0.10 |
 
-Cap at 150 CPM. Depth uses `depthMeasurementScale` (1.08) after fusion / calibration.
+This blend fixed an early bug where one method locked onto half the real speed and told fast rescuers to slow down.
 
-### Action Recognition (14 Classes)
+### Language and Voice Models
 
-`CPRErrorAction` taxonomy (severity-ranked for the headline cue):
+| Model | What it does in CPR Coach |
+|-------|---------------------------|
+| **ChatGPT API (large language model)** | Powers ChatCPR, the live coaching conversation after the guided emergency steps, and the AI summary of each practice session. |
+| **Retrieval Augmented Generation (RAG)** | Before the language model answers, the app searches a knowledge base built from American Heart Association guidance and gives the most relevant passages to the model, so answers stay grounded in real CPR guidelines. |
+| **Apple NaturalLanguage Sentence Embeddings** | Turns each question and each knowledge passage into a vector on the phone, then finds the closest matches by cosine similarity. This is the search step of RAG. Falls back to keyword search if embeddings are unavailable. |
+| **Apple Speech Recognition** | Converts what the rescuer says into text so they can answer emergency questions hands-free. A short pause automatically ends each answer. |
+| **Speech Intent Matching** | Understands yes, no, unsure, ages, and emergency words in every supported language, including romanized spellings, to decide the next step of the emergency flow. |
+| **Built-In Voice Engine** | An on-device CPR answer engine that classifies the question's intent and builds a reply from the knowledge base. It is always ready, with no download and no internet. |
+| **Text to Speech (AVFoundation)** | Speaks every instruction and correction out loud in the user's language. |
 
-`correct` · `overlapHands` · `clenchingHands` · `singleHand` · `bendingArms` · `tiltingArms` · `jumpPressing` · `squatting` · `standing` · `wrongPosition` · `insufficientPressing` · `slowFrequency` · `excessivePressing` · `randomPositionPressing`
+We have also prepared a speech recognition fine-tuning dataset of **3,152** examples across all supported languages for a future on-device Whisper model. See [Roadmap for CPR Coach 2.0](#roadmap-for-cpr-coach-20).
 
-A class is only asserted when the joints / hands it needs are visible.
+### How the Models Work Together
 
-### AI Models, RAG &amp; ChatGPT API
+1. YOLOv11 and Apple Vision find each person in the frame.
+2. MoveNet finds the body keypoints, and Apple Vision Hand Pose finds the hands.
+3. The Rescuer and Patient Classifier decides who is giving compressions and locks on.
+4. The One Euro Filter steadies the blue skeleton, and the green chest box is anchored to the patient's torso just below the rescuer's arms.
+5. LiDAR measures depth in centimeters while Rate Fusion measures compressions per minute.
+6. The CPR Error Recognition Engine labels the current technique and checks that a mistake is consistent before acting on it.
+7. The coaching engine picks the single most important correction, and Text to Speech says it out loud.
+8. During the emergency flow, Speech Recognition and Speech Intent Matching listen to the rescuer, and ChatGPT with RAG answers open questions.
+9. After practice, the ChatGPT API writes a session summary from the saved metrics.
 
-| Component | Technology | Runs on |
-|-----------|------------|---------|
-| Object / scene cues | YOLOv11n Core ML (`VNCoreMLRequest`) | Device |
-| Pose estimation | MoveNet Thunder TFLite | Device |
-| Pose / humans / hands | Apple Vision | Device |
-| Depth | ARKit scene depth / LiDAR | Device (Pro) |
-| Speech recognition | Apple Speech | Device |
-| Text-to-speech | AVSpeechSynthesizer | Device |
-| Knowledge retrieval | `RAGRetriever` + `NLEmbedding.sentenceEmbedding` | Device |
-| Conversational answers | **ChatGPT API** (chat completions) | Cloud |
-| Maps | MapKit / Apple Maps | Device + Apple services |
-| AED index | Bundled `WORLD.geojson` | Device |
+## Scoring and Thresholds
 
-**Production LLM / RAG hyperparameters** (tuned via sweep; grounding/alignment ≈ 0.97):
+All targets are based on the 2020 American Heart Association guidelines.
 
-| Parameter | Value | Why |
-|-----------|-------|-----|
-| Temperature | **0.35** | Stable, coach-like answers |
-| Max tokens (live Emergency) | **180** | Short spoken replies |
-| Max tokens (ChatCPR) | up to **600** | Longer educational answers |
-| RAG top-k | **4** | Grounding chunks per turn |
-| Pose / detection gate | **~0.30** | Suppress weak coaching |
+### AHA Coaching Targets
 
-**Knowledge base:** `Resources/cpr_knowledge.json` (**20** chunks at runtime; builder: `scripts/prepare_cpr_knowledge.py`). Fallback hardcoded chunks in `CPRKnowledgeBase`. System prompts require calling EMS in true emergencies, forbid fabricated drug doses / diagnoses, and keep answers educational.
-
-**ChatGPT API configuration** (see [Getting Started](#2-configure-the-chatgpt-api-key)): the app loads a local secret file at build/runtime. Without a key, on-device coaching, Learn, maps, and AEDs still work; ChatCPR / LLM emergency turns are disabled.
-
-### Emergency Voice Flow
-
-`EmergencyGuidedFlowEngine` steps (one clear question at a time):
-
-```text
-confirmEmergency → victimAge → sceneSafe → checkResponsive → checkBreathing
-  → call911 → confirm911 → getAED → startCPR → activeCoaching → recoveryMonitor
-```
-
-Plus a `notEmergency` exit. Local emergency numbers are region-aware; quick actions open call / hospital / AED. Conversation log + summary when the voice session ends.
-
----
-
-## Performance Metrics
-
-Evaluated on **device-exported** live coaching sessions (idle / unknown frames filtered; shallow-depth calibration adjustments applied in analysis scripts).
-
-| Metric | Result | Notes |
+| Metric | Target | Notes |
 |--------|--------|-------|
-| **Sessions / usable frames** | **61 / 3,999** | Live coach exports |
-| **MAPE (compression rate)** | **2.93%** | Mean absolute % error vs session references |
-| **MSE (depth)** | **0.31 cm²** | Fused / calibrated estimation |
-| **Precision** | **96.89%** | Coaching feedback reliability |
-| **Recall** | **97.29%** | Coverage of relevant coaching events |
-| **F1** | **97.06** | Harmonic mean |
-| **LiDAR fusion MSE** | **1.969** | vs pose-only **8.627** / SfM **9.02** (~**77%** reduction) |
-| **Mean calibrated depth** | **2.766 cm** | Calibration baseline statistic from eval set |
-| **End-to-end latency goal** | **&lt;400 ms** | Capture → metrics → cue |
+| Compression rate | 100 to 120 per minute | Ideal is 110 |
+| Compression depth | 5 to 6 cm | Ideal is 5.5 cm |
+| Elbow angle | 165 degrees or more | Relaxed to 158 degrees during the first setup window |
+| Recoil ratio | 0.65 or more | Measures whether the chest comes all the way back up |
+| Hand placement | Within 0.08 of chest center | Normalized screen distance from the sternum target |
 
-Source CSV: `Research Paper/validation_data/cpr_coach_statistics_summary.csv`  
-Figures / sweeps: `Research Paper/graphs/`, `validation_data/hyperparameter_sweep_results.csv`
+### Compression Quality Score
 
-Paper-subset reference fields also live in `VisionCPRCoach/Resources/cv_reference_metrics.json` (e.g. historical paper MAPE **1.82%**, latency **28 ms** on a narrower subset). For competition “live coach” claims, prefer the **2.93% / 0.31 / 96.89…** table above.
+Each moment of CPR earns up to 9 points.
+
+| Check | Points |
+|-------|--------|
+| Hands centered on the chest | 2 |
+| Elbows locked at 165 degrees or more | 2 |
+| Rate between 100 and 120 per minute | 2 |
+| Depth between 5 and 6 cm | 2 |
+| Full chest recoil | 1 |
+
+| Total points | Rating |
+|--------------|--------|
+| 8 to 9 | Excellent |
+| 6 to 7 | Good |
+| 3 to 5 | Needs Work |
+| 1 to 2 | Poor |
+
+### Pressure Score
+
+A 0 to 100 score the app calculates during every session.
+
+| Part | Max points | How it is scored |
+|------|------------|------------------|
+| Depth | 40 | Full 40 inside 5 to 6 cm. Loses 10 points per cm away from 5.5 cm. |
+| Rate | 35 | Full 35 inside 100 to 120 per minute. Loses 0.8 points per compression away from 110. |
+| Motion | 25 | Based on how far the wrists travel with each push. |
+
+### CPR Error Recognition and Confidence
+
+The error recognition engine scores 14 classes. Each class is only scored when the joints it needs are visible, so a close-up arm view still checks hands and arms while a full-body side view also checks posture.
+
+| Class | Severity |
+|-------|----------|
+| Wrong position | 10 |
+| Insufficient pressing | 9 |
+| Single hand | 9 |
+| Slow frequency | 8 |
+| Excessive pressing | 8 |
+| Bending arms | 7 |
+| Standing | 7 |
+| Jump pressing | 6 |
+| Tilting arms | 5 |
+| Squatting | 5 |
+| Clenching hands | 4 |
+| Overlapping hands | 3 |
+| Random position pressing | 3 |
+| Correct | 0 |
+
+**How a mistake is confirmed**
+
+1. A class must reach a confidence of **0.45** to be considered active.
+2. The headline mistake is the active class with the highest severity × confidence.
+3. A composite confidence score is calculated as **CS = objectness × temporal consistency**, where objectness is how confident the model is that it sees the rescuer, and temporal consistency is how often the same mistake appeared over the last **9** frames.
+4. If **CS** is below **0.30**, the mistake is treated as a one-frame glitch and is not spoken. This keeps the coach from overloading the rescuer with false corrections.
+
+### Coaching Margins
+
+To avoid nagging, the app only speaks a rate or depth correction when the value is clearly outside the AHA range and the measurement is trustworthy.
+
+| Correction | Fires when |
+|------------|------------|
+| Push faster | Rate below 95 per minute |
+| Slow down | Rate above 125 per minute |
+| Push harder | Depth below 4.6 cm |
+| Ease up | Depth above 6.4 cm |
+| Minimum confidence | Rate and depth confidence must be at least 0.55 |
+
+### Python Prototype Thresholds
+
+The original prototype in `live_movenet_cpr.py` uses simpler rules, checked in this priority order.
+
+| Check | Threshold | Feedback |
+|-------|-----------|----------|
+| Keypoint visibility | Confidence below 0.3 on any shoulder, elbow, or wrist | Move body fully into camera view |
+| Hand placement | Wrists more than 80 px from shoulder center | Move hands toward the center of the chest |
+| Elbow angle | Below 150 degrees | Straighten your arms more |
+| Rate too slow | Below 100 per minute | Compress faster |
+| Rate too fast | Above 120 per minute | Slow down slightly |
+| Depth | Wrist travel below 20 px | Push deeper |
+| All good | None of the above | Good rhythm. Keep going |
+
+### Evaluation
+
+We evaluated form using 3D angle diagrams of the rescuer's joints. A lower theta indicates poorer CPR form and a higher theta indicates proper CPR form. We tested each version on a CPR manikin with each other as rescuers, across different rooms, lighting, and camera angles, and tuned the thresholds above based on where the app gave the wrong advice.
+
+On live coaching session exports used for research figures:
+
+| Metric | Result |
+|--------|--------|
+| MAPE (compression rate) | 2.93% |
+| MSE (depth) | 0.31 cm² |
+| Precision | 96.89% |
+| Recall | 97.29% |
+| F1 | 97.06 |
+
+## Tech Stack
+
+| Category | Tools |
+|----------|-------|
+| Languages | Swift (SwiftUI), Python |
+| Development | Xcode, Visual Studio Code |
+| Computer vision | YOLOv11 (Core ML), MoveNet Thunder and Lightning (TensorFlow Lite), Apple Vision |
+| Depth | ARKit with LiDAR scene depth |
+| AI | ChatGPT API, RAG with Apple NaturalLanguage embeddings |
+| Voice | Apple Speech framework, AVFoundation text to speech |
+| Maps and location | Apple Maps (MapKit), Core Location |
+| Data | `WORLD.geojson` worldwide AED database, AHA knowledge base |
+| Prototype | Python, OpenCV, NumPy, TensorFlow |
 
 ---
 
-## Impact
+# Setup and Usage
 
-CPR Coach aims to shrink the gap between “I have never been trained” and “I can start useful compressions now.”
+## Requirements
 
-- **Practice before crisis** — Live form feedback builds muscle memory on rate, depth, and hands.
-- **Support during crisis** — Voice AI reduces cognitive load with step-by-step checks and EMS/AED prompts.
-- **Scale** — A phone-based coach can reach populations far beyond classroom certification seats.
-- **Access** — Multilingual UI, on-device AEDs, and offline-capable coaching help communities where classes and equipment are scarce.
-
-The product is training and decision support — not a clinical claim of lives saved.
-
----
+| Item | Version |
+|------|---------|
+| Mac | macOS with Xcode 16 or later |
+| iPhone | iOS 18.5 or later |
+| LiDAR | Recommended (iPhone Pro models) for 3D depth. Other iPhones still get pose, rate, and placement coaching. |
+| API key | ChatGPT API key for ChatCPR and AI session summaries |
+| Python | 3.10 or later, only for the prototype and localization tools |
 
 ## Getting Started
 
-### Prerequisites
+### Step 1: Download the Project
 
-| Component | Requirement |
-|-----------|-------------|
-| Mac | macOS with a recent **Xcode** (project destinations include **iOS 18.5** simulators) |
-| iPhone | Physical device strongly recommended (camera + mic); **LiDAR** (12 Pro / 13 Pro / 14 Pro / 15 Pro / 16 Pro family) unlocks full depth path |
-| Account | Apple Developer team for device signing |
-| ChatGPT API | Optional for ChatCPR / LLM emergency turns; on-device coach works without it |
-| Python 3 | Optional, for research scripts and localization tooling |
-
-Simulator note: UI builds, but live camera coaching and LiDAR require a **physical iPhone**.
-
-### 1. Clone and Open
+Clone the repository or download it as a ZIP and unzip it.
 
 ```bash
 git clone https://github.com/lalithbhima/CPRCoach.git
 cd CPRCoach
-open VisionCPRCoach.xcodeproj
 ```
 
-If you are working from the Congressional App Challenge wrap folder:
+### Step 2: Add Your API Key
+
+1. Copy `Config/Secrets.example.swift` to `VisionCPRCoach/Config/Secrets.swift`.
+2. Paste your **ChatGPT API** key between the quotes.
+3. Never commit this file or any file that contains a real key.
+
+The rest of the app — including camera coaching, the emergency flow, and the AED map — works without a key.
+
+### Step 3: Open in Xcode
+
+Double-click `VisionCPRCoach.xcodeproj`. Xcode will load the local TensorFlow Lite package from `LocalPackages/TensorFlowLite` automatically.
+
+### Step 4: Set Up Signing
+
+1. Select the **VisionCPRCoach** project in the left sidebar.
+2. Open **Signing and Capabilities**.
+3. Choose your Apple developer team. A free personal team works.
+4. If Xcode reports a bundle identifier conflict, change `com.lalithbhima.VisionCPRCoach` to something unique.
+
+### Step 5: Run on Your iPhone
+
+1. Connect your iPhone with a cable and unlock it.
+2. Turn on **Developer Mode** in Settings → Privacy and Security, if asked.
+3. Select your iPhone as the run destination at the top of Xcode.
+4. Press **Run** (`⌘R`).
+5. Allow camera, microphone, speech recognition, and location access when prompted.
+
+The camera, LiDAR, and microphone do not work in the iOS Simulator, so a real iPhone is required.
+
+### Step 6: Your First Coaching Session
+
+1. Choose your language on the welcome screen.
+2. Open the **Coach** tab.
+3. Place the phone on the floor or a stand about 1 to 2 meters away, looking at the patient or manikin from the side.
+4. Make sure both the rescuer's arms and the patient's chest are in view.
+5. Wait for the blue skeleton to lock onto you and the green box to appear on the chest.
+6. Start compressions and follow the spoken corrections.
+7. When you finish, open **More → Progress** to see your session report and AI summary.
+
+To try the voice assistant, open the **Emergency** tab and answer each question out loud.
+
+## Running the Python Prototype
+
+Before building the iPhone app, we built the coaching logic in Python. `live_movenet_cpr.py` runs MoveNet Thunder on a webcam, tracks wrist motion to estimate compression rate, measures elbow angle and hand placement, and shows live feedback on screen. The iOS app ports this same logic into Swift.
 
 ```bash
-cd APPChallenge/CPRCoach   # or the nested mirror you use
-open VisionCPRCoach.xcodeproj
+python3 -m venv venv
+source venv/bin/activate
+pip install opencv-python numpy tensorflow
+python live_movenet_cpr.py
 ```
 
-Swift sources under `VisionCPRCoach/` are included via Xcode’s synchronized root group — new `.swift` files and `Resources/yolo11n.mlpackage` are picked up automatically.
+Press `Q` to quit. The script needs `movenet_thunder.tflite` in the same folder, which is already included.
 
-### 2. Configure the ChatGPT API Key
+## Localization Tools
 
-**Never commit real keys.** Secrets are gitignored.
-
-Create a local secret file the app can load (placeholder shape):
-
-```json
-{
-  "CHATGPT_API_KEY": "sk-proj-YOUR_KEY_HERE"
-}
-```
-
-or TypeScript-style config used by the build sync script:
-
-```ts
-export const CHATGPT_API_KEY = "sk-proj-YOUR_KEY_HERE";
-```
-
-**Where to put it (pick the path your tree uses):**
-
-- `VisionCPRCoach/Config/secret.ts` (build copies into the bundle), and/or  
-- `VisionCPRCoach/Resources/*_secret.json` (example file ships empty), and/or  
-- `Config/Secrets.swift` generated from `Secrets.example.swift`
-
-**Get a key:** [OpenAI API keys](https://platform.openai.com/api-keys) (ChatGPT / Chat Completions API).
-
-Without a key, Live Coach, Learn, Hospitals, AEDs, Progress, and multilingual UI still run. ChatCPR and LLM-backed emergency answers stay disabled.
-
-### 3. Build and Run on a Device
-
-1. In Xcode, select the **VisionCPRCoach** target.
-2. **Signing &amp; Capabilities** → choose your Team; update the bundle ID if needed (`com.lalithbhima.VisionCPRCoach` by default).
-3. Connect an iPhone → select it as the run destination.
-4. Build and run (**⌘R**).
-5. Grant **Camera**, **Microphone**, **Speech Recognition**, and **Location** when prompted.
-
-First build may compile Core ML (`yolo11n`) and fetch the local TensorFlow Lite package under `LocalPackages/TensorFlowLite`.
-
-### 4. First-Run Walkthrough
-
-1. Choose language (45 options).  
-2. Complete Welcome.  
-3. Open **Coach** → **Start Coaching** → position the phone so the rescuer and manikin / patient region are visible.  
-4. Watch for status pills: Live, AI Detection %, AI Model, YOLOv11, LiDAR Depth (on Pro).  
-5. Optionally **Calibrate** after a set of good compressions.  
-6. Explore **Emergency** (voice flow), **Learn**, **ChatCPR**, **More → Hospitals / AEDs / Progress**.
-
-### 5. Practice Session Checklist
-
-**Live Coach**
-
-1. Place the phone on a stable stand ~1–2 m from the side of the rescuer.  
-2. Start coaching; confirm the blue skeleton locks on the **rescuer** and the green box stays on the **chest**.  
-3. Compress at ~110 CPM, ~5–6 cm; listen for rate / depth / placement cues.  
-4. Stop → check Progress for score breakdown.
-
-**Emergency Voice AI**
-
-1. Start Emergency → answer scene / responsiveness / breathing prompts out loud.  
-2. Confirm EMS call step; try Find Hospital / Find AED.  
-3. Enter active coaching and verify TTS cues remain short.
-
-**ChatCPR**
-
-1. Ask “How deep should I press?” — answer should cite guideline bands and remind to call EMS in a real emergency.  
-2. Use “Analyze my form” during / after a coach session if metrics are live.
-
-**Offline sanity**
-
-1. Enable Airplane Mode.  
-2. Confirm Coach + AED map (bundled GeoJSON) still work.  
-3. ChatGPT-backed ChatCPR should fail gracefully without network.
-
----
-
-## Project Structure
-
-```text
-CPRCoach/                             # GitHub repository root
-├── README.md                         # This document
-├── docs/
-│   ├── assets/CPRCoachLogo.png
-│   └── media/CPR_Coach_Demo.mp4
-├── CAC_Responses.md                  # Official Congressional App Challenge responses
-├── VisionCPRCoach/                   # SwiftUI app sources + Resources
-│   ├── YOLOv11ObjectDetector.swift
-│   ├── MoveNetPoseEstimator.swift
-│   ├── MultiPersonPoseAnalyzer.swift
-│   ├── CameraViewModel.swift
-│   ├── CPRMetricsEngine.swift
-│   ├── CPRActionRecognitionEngine.swift
-│   ├── EmergencyGuidedFlowEngine.swift
-│   ├── LiDARDepthSession.swift
-│   ├── CoachView.swift / ImmersiveCoachView.swift
-│   └── Resources/
-│       ├── yolo11n.mlpackage
-│       ├── movenet_thunder.tflite
-│       ├── movenet_lightning_int8.tflite
-│       ├── WORLD.geojson             # 166,925 AED features
-│       ├── cpr_knowledge.json
-│       ├── cv_reference_metrics.json
-│       └── Localizations/            # 45 locale JSON files
-├── Config/                           # Secrets templates (gitignored keys)
-├── LocalPackages/TensorFlowLite
-├── scripts/                          # Localization + model helpers
-├── live_movenet_cpr.py               # Python prototype / reference
-└── VisionCPRCoach.xcodeproj
-```
-
-Challenge wrap (demo, research paper, App Inventor) may also live in the APPChallenge folder used for submission packaging.
-
----
-
-## Scripts &amp; Research Tooling
-
-### Challenge / knowledge (`APPChallenge/scripts/`)
+The `scripts/` folder holds the tools we used to build and check every language file.
 
 | Script | Purpose |
 |--------|---------|
-| `prepare_cpr_knowledge.py` | PDF / sources → ~400-char chunks → `cpr_knowledge.json` |
-| `download_cpr_training_samples.sh` | Bootstrap TrainingSamples imagery |
+| `build_all_localizations.py` | Checks that every language has every key from the English file |
+| `sync_missing_locale_keys.py` | Translates any missing keys into each language |
+| `generate_learn_and_keys.py` | Translates the Learn lessons into all languages |
+| `add_nlp_tokens.py` | Adds speech intent words for the emergency flow |
+| `expand_nlp_romanized.py` | Adds romanized spellings for languages with other scripts |
+| `welcome_translations.py` | Applies welcome screen translations |
 
-### App localization &amp; models (`CPRCoach/scripts/`)
+To check that all languages are complete:
 
-| Script | Purpose |
-|--------|---------|
-| `download_movenet.sh` | Fetch / copy MoveNet Thunder TFLite |
-| `build_all_localizations.py` | Validate every locale has all `en.json` keys |
-| `sync_missing_locale_keys.py` | Fill missing keys |
-| `generate_learn_and_keys.py` / `embed_learn_keys.py` | Learn module translation pipeline |
-| `add_nlp_tokens.py` / `apply_nlp_locales.py` / `expand_nlp_romanized.py` | Emergency STT yes/no tokens |
-| `welcome_translations.py` | Welcome strings across 45 locales |
+```bash
+python3 scripts/build_all_localizations.py
+```
 
-### Evaluation (`Research Paper/`)
+## Running Tests
 
-| Artifact | Purpose |
-|----------|---------|
-| `validation_data/cpr_coach_statistics_summary.csv` | MAPE / MSE / P / R / F1 / LiDAR vs pose-only |
-| `validation_data/hyperparameter_sweep_results.csv` | Temperature / tokens / RAG-k / confidence winners |
-| `generate_cpr_statistics_figures.py` | Pitch / paper figures |
-| `generate_hyperparameter_tuning_graphs.py` | Sweep plots |
-
----
-
-## App Inventor / Appathon Frontend
-
-For MIT App Inventor / Appathon-style demos (separate from the production SwiftUI app):
-
-- Packages under `CPRCoach-AppInventor/` (e.g. `CPRCoach_Frontend_Appathon.aia`)
-- Builder scripts `build_*_aia.py` regenerate importable `.aia` ZIPs mirroring the iOS tab structure
-
-Import the `.aia` in MIT App Inventor; this is a **frontend exploration**, not the live four-modality coach.
-
----
-
-## Roadmap
-
-**Completed**
-
-- [x] Live Coach with multi-joint tracking and spoken cues  
-- [x] Four-modality vision path (YOLOv11, MoveNet, Apple Vision, LiDAR)  
-- [x] Rescuer–patient separation, chest-box anchoring, temporal pose filter  
-- [x] CPM fusion (peaks + zero-cross + FFT) and LiDAR depth blend (72/28)  
-- [x] 14-class action recognition taxonomy  
-- [x] Emergency Voice AI guided flow + call / hospital / AED actions  
-- [x] Learn modules with voice read-along  
-- [x] ChatCPR with RAG + ChatGPT API  
-- [x] Hospitals (Apple Maps) and worldwide AED GeoJSON (166,925)  
-- [x] Progress, session export/share, calibration history  
-- [x] Multilingual UI / speech (45 languages)  
-- [x] Hyperparameter tuning for live LLM + pose gates  
-- [x] Research metrics (MAPE, MSE, precision / recall / F1)  
-- [x] MIT App Inventor frontend packaging for competition demos  
-
-**In progress / near-term**
-
-- [ ] Stronger fully-offline LLM / RAG path when the network is unavailable  
-- [ ] Richer multi-rescuer scene understanding (role assignment, 2-minute switch cues)  
-- [ ] Accessibility: haptic compression metronome, large visual-only mode, voice-only blind path  
-
-**Future**
-
-- [ ] Instructor / AHA-aligned validation studies at community scale  
-- [ ] Expanded region-specific EMS numbers and AED freshness pipeline  
-- [ ] Android / cross-platform companion beyond App Inventor  
-- [ ] Optional privacy-preserving cloud sync for classroom programs  
-- [ ] Smaller model packaging / download footprint  
-
----
+In Xcode, press `⌘U` to run the unit tests in `VisionCPRCoachTests` and the UI tests in `VisionCPRCoachUITests`.
 
 ## Troubleshooting
 
 | Problem | Fix |
 |---------|-----|
-| **Camera black / no coaching** | Physical device required. Check Camera permission. Restart session. Confirm `isRunning` Live pill. |
-| **Skeleton jumps between people** | Improve side angle so rescuer is upright and patient is horizontal. Ensure good lighting. Latest builds score posture + sticky lock. |
-| **Chest box bounces with hands** | Update to builds that anchor the box to patient torso / horizontal YOLO–Vision box, not wrists. |
-| **No YOLOv11 pill** | Confirm `yolo11n.mlpackage` is in `Resources/` and the target rebuilt (Xcode compiles Core ML). Check console for `YOLO: yolo11n ready`. |
-| **No AI Model pill** | Confirm `movenet_thunder.tflite` is bundled; check TensorFlow Lite local package resolves. |
-| **No LiDAR Depth pill** | Needs LiDAR hardware + ARKit path. Clean the depth sensor; grant Camera; Pro/Max device. Non-LiDAR still coaches via pose + calibration. |
-| **Depth always shallow/deep** | Run **Calibrate** after good compressions. Prefer LiDAR device. Check phone height/angle. |
-| **CPM wildly wrong** | Stabilize the phone. Fuse needs clear wrist vertical motion; avoid extreme motion blur. |
-| **ChatCPR / Emergency LLM silent** | Add ChatGPT API key; check network; verify secret file is loaded (no key → on-device features still work). |
-| **Speech not recognizing answers** | Microphone + Speech permissions; speak the locale’s yes/no tokens; reduce room noise. |
-| **AED map empty** | Confirm `WORLD.geojson` is in the bundle (~59 MB). Location permission required for distance sort. |
-| **Share / export blank** | Use Progress export after a completed session; rebuild if share sheet host is stale. |
-| **Signing / provisioning errors** | Select your Team; unique bundle ID; Automatic signing. Simulator destination OS must match an installed runtime (e.g. iPhone 16, OS 18.5). |
-| **Build fails on Core ML / TFLite** | Clean build folder (⇧⌘K), rebuild. Ensure `LocalPackages/TensorFlowLite` is present. |
+| Blue skeleton does not appear | Move back so the rescuer's shoulders, elbows, and wrists are fully in view, and improve the lighting. |
+| Skeleton jumps to the patient | Film from the side so the rescuer is kneeling upright and the patient is lying flat. |
+| Depth always shows estimating | LiDAR needs an iPhone Pro model. On other phones, run depth calibration from the More tab. |
+| ChatCPR says no API key | Check that `VisionCPRCoach/Config/Secrets.swift` exists and contains your ChatGPT API key. |
+| Voice assistant does not hear you | Allow microphone and speech recognition access in Settings, then restart the app. |
+| Build fails on signing | Select your developer team and use a unique bundle identifier. |
+| YOLOv11 pill missing | Confirm `Resources/yolo11n.mlpackage` is present and rebuild so Xcode compiles the Core ML model. |
+
+## Folder Structure
+
+```text
+CPRCoach/
+├── VisionCPRCoach/                    # iOS app source (SwiftUI)
+│   ├── VisionCPRCoachApp.swift        # App entry point
+│   ├── MainTabView.swift              # Coach, Emergency, Learn, Chat, More tabs
+│   │
+│   ├── Coaching and computer vision
+│   │   ├── CameraViewModel.swift              # Frame pipeline and live state
+│   │   ├── YOLOv11ObjectDetector.swift        # YOLOv11 Core ML object cues
+│   │   ├── MoveNetPoseEstimator.swift         # MoveNet pose model on device
+│   │   ├── MultiPersonPoseAnalyzer.swift      # Rescuer and patient separation
+│   │   ├── PoseTrackingFilter.swift           # One Euro smoothing and rescuer lock
+│   │   ├── CPRChestTargetEstimator.swift      # Green chest target box
+│   │   ├── CompressionDepth3DEstimator.swift  # LiDAR compression depth
+│   │   ├── CPRMetricsEngine.swift             # Rate fusion, depth, recoil, scores
+│   │   ├── CPRActionRecognitionEngine.swift   # 14-class CPR error recognition
+│   │   ├── RealTimeCPRResponseEngine.swift    # Spoken coaching cues
+│   │   └── CPRGuidelines.swift                # AHA targets and thresholds
+│   │
+│   ├── Emergency and voice
+│   │   ├── EmergencyGuidedFlowEngine.swift    # Dispatcher-style decision flow
+│   │   ├── SpeechRecognitionManager.swift     # Hands-free listening
+│   │   ├── BuiltInCPRVoiceEngine.swift        # On-device CPR answers
+│   │   ├── VoiceCoach.swift                   # Text to speech
+│   │   ├── EmergencyNumberService.swift       # Local emergency number
+│   │   ├── HospitalLocatorService.swift       # Nearest hospitals
+│   │   └── AEDGeoJSONStore.swift              # Worldwide AED lookup
+│   │
+│   ├── AI assistant
+│   │   ├── AIAssistantView.swift              # ChatCPR screen
+│   │   ├── RAGRetriever.swift                 # Embedding search for RAG
+│   │   └── CPRSessionAnalysisService.swift    # AI session summaries
+│   │
+│   ├── Progress and learning
+│   │   ├── CPRProgressView.swift              # Session history and graphs
+│   │   ├── CPRSessionDetailView.swift         # Session report
+│   │   └── TrainingView.swift                 # Learn tab
+│   │
+│   ├── Resources/
+│   │   ├── yolo11n.mlpackage                  # YOLOv11 object detection model
+│   │   ├── WORLD.geojson                      # Worldwide AED database
+│   │   ├── cpr_knowledge.json                 # AHA knowledge base for RAG
+│   │   ├── cv_reference_metrics.json          # Vision validation targets
+│   │   ├── movenet_thunder.tflite             # Pose model (accuracy)
+│   │   ├── movenet_lightning_int8.tflite      # Pose model (speed)
+│   │   ├── languages.json                     # Supported languages
+│   │   ├── Localizations/                     # Language files
+│   │   ├── Learn/                             # Learn tab lessons
+│   │   └── TrainingSamples/                   # Speech fine-tuning dataset
+│   │
+│   ├── assests/                               # Logo assets
+│   └── Assets.xcassets/                       # App icon and images
+│
+├── VisionCPRCoach.xcodeproj/          # Xcode project
+├── VisionCPRCoachTests/               # Unit tests
+├── VisionCPRCoachUITests/             # UI tests
+├── LocalPackages/TensorFlowLite/      # TensorFlow Lite Swift package
+├── Config/                            # API key template
+├── scripts/                           # Localization and translation tools
+├── live_movenet_cpr.py                # Python prototype of the coaching logic
+└── movenet_thunder.tflite             # Model used by the Python prototype
+```
+
+The groupings under `VisionCPRCoach/` are for readability. In the project, these Swift files sit directly inside `VisionCPRCoach/`.
 
 ---
 
-## Lessons Learned (Hard Problems We Solved)
+# Project Information
 
-1. **Accurate live coaching** — Weeks of threshold and hyperparameter tuning (temperature 0.35, max tokens 180, RAG k = 4, confidence ~0.30) until spoken tips matched the body.  
-2. **Fusing four CV modalities** — Temporal filters, confidence-weighted fallbacks, unified AVCapture / ARKit Coach surface.  
-3. **Two-body CPR scenes** — Posture scoring + sticky rescuer lock + horizontal patient boxes (Vision + YOLO).  
-4. **Depth without a lab** — LiDAR fusion (72/28) + user calibration + research MSE comparison.  
-5. **Rate noise** — Peak + zero-cross + FFT blend instead of a single estimator.  
-6. **LLM safety** — On-device RAG, strict system prompts, low temperature, short max tokens; always escalate to EMS.  
-7. **Cognitive load** — Hysteresis so the coach does not talk over every frame.  
-8. **Secrets** — Keys never committed; placeholders only in docs.  
-9. **App Inventor packaging** — Rebuild `.aia` from valid templates for Appathon demos.
+## How We Used AI in Development
 
----
+We used ChatGPT, Cursor, and Claude to brainstorm and draft early versions of features, explain errors, help us debug, and suggest test cases. Our team designed every feature, coded the app, wrote the emergency conversation flow, tested each version, and rewrote or removed any AI suggestion that did not hold up for CPR. Nothing stayed in the app unless one of us understood it and approved it.
 
-## Congressional App Challenge Notes
+## Privacy and Permissions
 
-Official written responses (description, inspiration, technical difficulties, 2.0 improvements, AI disclosure, teamwork takeaway) live in:
+| Permission | Why it is needed |
+|------------|------------------|
+| Camera | Analyze hand placement, compression rate, and depth in real time |
+| Microphone | Voice-guided emergency questions and AI coaching |
+| Speech recognition | Answer emergency questions hands-free |
+| Location | Find the local emergency number, nearest hospitals, and nearest AEDs |
 
-**[`CAC_Responses.md`](CAC_Responses.md)**
+Camera frames are processed on the phone and are not uploaded. Practice sessions are stored on the device.
 
-**AI used in development:** ChatGPT, Cursor, and Claude — for brainstorming, debugging assistance, and draft copy. We designed features, wrote and rewrote emergency dialogue, implemented SwiftUI / Python prototypes, and approved every coaching threshold against guideline bands and manikin practice.
+## Roadmap for CPR Coach 2.0
 
-**AI used at runtime:** on-device pose / detection models; ChatCPR and some emergency answers via the **ChatGPT API** with RAG over CPR knowledge chunks.
+- **Full offline support.** Move the AI assistant, session summaries, and speech recognition onto the device, including a Whisper model fine-tuned on our multilingual dataset, so every feature works with no network.
+- **Whole scene understanding.** Recognize when more helpers arrive and coach the group like a team leader, including switching compressors every two minutes and sending someone for an AED.
+- **Accessibility.** Vibration at the correct compression rhythm and large visual cues for deaf and hard of hearing rescuers, a voice-only experience for blind and low vision users, and guidance for people with limited mobility to direct a nearby bystander.
+- **American Heart Association partnership.** Validate our coaching with certified instructors and bring CPR Coach into schools, churches, and community centers.
 
----
+## Disclaimer
 
-## Contributing
+CPR Coach is a guidance and training tool. It is not a medical device and does not replace professional medical care or certified CPR training. In an emergency, always call your local emergency number first.
 
-We welcome careful contributions that improve safety, clarity, and measurement quality.
-
-1. Fork and create a feature branch (`git checkout -b feature/your-idea`).  
-2. Keep changes focused (one concern per PR).  
-3. Do **not** commit API keys, patient data, or private session exports.  
-4. Test on a physical device with camera and microphone.  
-5. Update this README when behavior changes.  
-6. Open a pull request with motivation, approach, and test plan.
-
-High-value areas: localization, accessibility, calibration UX, evaluation scripts, clearer Emergency copy, multi-rescuer scene logic.
-
----
-
-## Acknowledgments
-
-- **Lalithendra Reddy Bhima** and **Bhavika Bhima** — creators  
-- **Madhava Bhima** — coach / mentor  
-- CPR science and training communities whose public guidelines inform bystander education (we coach actionable steps; we do not claim affiliation with any certifying body in-app)  
-- Apple Vision, ARKit, MapKit, Speech, and Core ML  
-- MoveNet / TensorFlow Lite pose ecosystem  
-- Ultralytics YOLOv11 Core ML packaging used for on-device object cues  
-- OpenAI **ChatGPT API** for grounded conversational assistance  
-- OpenAED-style worldwide AED data contributors  
-
----
-
-## License
-
-Copyright (c) CPR Coach authors.
-
-Unless a `LICENSE` file in this repository states otherwise, all rights are reserved. Contact the authors before redistribution, commercial use, or redistribution of bundled AED / training datasets.
-
-This software is provided for **education and training**. It is **not** a medical device and makes **no clinical guarantees**.
-
----
-
-## Contacts &amp; Links
+## Contact and Links
 
 | Item | Detail |
 |------|--------|
-| Creators | Lalithendra Reddy Bhima, Bhavika Bhima |
-| Coach | Madhava Bhima |
+| Creators | Lalith Bhima, Bhavika Bhima, Yihan Duan |
 | Demo video | [`docs/media/CPR_Coach_Demo.mp4`](docs/media/CPR_Coach_Demo.mp4) |
-| Logo | [`docs/assets/CPRCoachLogo.png`](docs/assets/CPRCoachLogo.png) |
-| iOS app | `VisionCPRCoach/` |
-| CAC responses | [`CAC_Responses.md`](CAC_Responses.md) |
-| Research / metrics | `Research Paper/` |
-| App Inventor package | `CPRCoach-AppInventor/` |
 | GitHub | [github.com/lalithbhima/CPRCoach](https://github.com/lalithbhima/CPRCoach) |
-
-For collaboration, academic questions, or media requests, open a GitHub issue or contact the creators through your competition / school channel.
-
----
-
-## Citation
-
-```text
-Bhima, L. R., & Bhima, B. (2026). Vision CPR Coach: Multimodal AI for
-bystander CPR training and emergency guidance. Congressional App Challenge
-project materials.
-```
+| Congressional App Challenge | Add your district submission / video link here |
 
 ---
 
 <p align="center">
   <strong>CPR Coach</strong> — practice with vision. Act with confidence. Call for help first.
-</p>
-
-<p align="center">
-  <em>"The person standing right there can be the reason someone gets to go home."</em>
 </p>
