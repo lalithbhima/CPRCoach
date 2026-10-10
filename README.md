@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="VisionCPRCoach/assests/CPRCoachLogo.png" alt="CPR Coach logo" width="160">
+  <img src="VisionCPRCoach/assests/CPRCoachLogo.png" alt="CPR Coach logo" width="220">
 </p>
 
 <h1 align="center">CPR Coach</h1>
@@ -10,10 +10,6 @@
 
 <p align="center">
   Submitted to the <strong>Congressional App Challenge</strong> by Lalith Bhima, Bhavika Bhima, and Yihan Duan
-</p>
-
-<p align="center">
-  <em>Training guidance only. Not a medical device. In a real emergency, call your local emergency number first.</em>
 </p>
 
 ---
@@ -543,12 +539,11 @@ CPR Coach is a guidance and training tool. It is not a medical device and does n
 | Item | Detail |
 |------|--------|
 | Creators | Lalith Bhima, Bhavika Bhima, Yihan Duan |
-| Demo video | [`docs/media/CPR_Coach_Demo.mp4`](docs/media/CPR_Coach_Demo.mp4) |
 | GitHub | [github.com/lalithbhima/CPRCoach](https://github.com/lalithbhima/CPRCoach) |
 | Congressional App Challenge | Add your district submission / video link here |
 
 ---
 
 <p align="center">
-  <strong>CPR Coach</strong> — practice with vision. Act with confidence. Call for help first.
+  <strong>CPR Coach</strong> — practice with vision. Act with confidence.
 </p>
