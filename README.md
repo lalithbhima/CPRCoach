@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="VisionCPRCoach/assests/CPRCoachLogo.png" alt="CPR Coach logo" width="220">
+  <img src="VisionCPRCoach/assests/CPRCoachLogo.png" alt="CPR Coach logo" width="420">
 </p>
 
 <h1 align="center">CPR Coach</h1>
