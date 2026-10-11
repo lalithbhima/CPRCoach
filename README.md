@@ -16,7 +16,6 @@
 
 ## Table of Contents
 
-- [Presentation](#presentation)
 - [Overview](#overview)
   - [Problem Statement](#problem-statement)
   - [Our Solution](#our-solution)
@@ -60,38 +59,6 @@
   - [Contact and Links](#contact-and-links)
 
 ---
-
-## Presentation
-
-Browse our full Congressional App Challenge deck (12 slides). Open the interactive viewer for keyboard and on-screen arrows, or scroll the strip below.
-
-<p align="center">
-  <a href="docs/presentation/index.html"><strong>Open interactive slideshow</strong></a>
-  &nbsp;·&nbsp;
-  <a href="docs/presentation/Presentation.pdf"><strong>Download Presentation.pdf</strong></a>
-</p>
-
-<p align="center">
-  <em>In the slideshow: press <code>→</code> for next, <code>←</code> for previous, or click the arrow buttons. Click any thumbnail below to jump to that slide.</em>
-</p>
-
-<!-- Presentation strip: scroll horizontally; click a slide or use the interactive viewer -->
-<div style="overflow-x:auto; max-width:100%; padding-bottom:8px;">
-<table><tr>
-<td valign="top" style="padding:0 10px 0 0;"><a href="docs/presentation/index.html?slide=1"><img src="docs/presentation/slides/slide-01.png" alt="Slide 1" width="520"></a><p align="center"><sub>Slide 1 of 12</sub></p></td>
-<td valign="top" style="padding:0 10px 0 0;"><a href="docs/presentation/index.html?slide=2"><img src="docs/presentation/slides/slide-02.png" alt="Slide 2" width="520"></a><p align="center"><sub>Slide 2 of 12</sub></p></td>
-<td valign="top" style="padding:0 10px 0 0;"><a href="docs/presentation/index.html?slide=3"><img src="docs/presentation/slides/slide-03.png" alt="Slide 3" width="520"></a><p align="center"><sub>Slide 3 of 12</sub></p></td>
-<td valign="top" style="padding:0 10px 0 0;"><a href="docs/presentation/index.html?slide=4"><img src="docs/presentation/slides/slide-04.png" alt="Slide 4" width="520"></a><p align="center"><sub>Slide 4 of 12</sub></p></td>
-<td valign="top" style="padding:0 10px 0 0;"><a href="docs/presentation/index.html?slide=5"><img src="docs/presentation/slides/slide-05.png" alt="Slide 5" width="520"></a><p align="center"><sub>Slide 5 of 12</sub></p></td>
-<td valign="top" style="padding:0 10px 0 0;"><a href="docs/presentation/index.html?slide=6"><img src="docs/presentation/slides/slide-06.png" alt="Slide 6" width="520"></a><p align="center"><sub>Slide 6 of 12</sub></p></td>
-<td valign="top" style="padding:0 10px 0 0;"><a href="docs/presentation/index.html?slide=7"><img src="docs/presentation/slides/slide-07.png" alt="Slide 7" width="520"></a><p align="center"><sub>Slide 7 of 12</sub></p></td>
-<td valign="top" style="padding:0 10px 0 0;"><a href="docs/presentation/index.html?slide=8"><img src="docs/presentation/slides/slide-08.png" alt="Slide 8" width="520"></a><p align="center"><sub>Slide 8 of 12</sub></p></td>
-<td valign="top" style="padding:0 10px 0 0;"><a href="docs/presentation/index.html?slide=9"><img src="docs/presentation/slides/slide-09.png" alt="Slide 9" width="520"></a><p align="center"><sub>Slide 9 of 12</sub></p></td>
-<td valign="top" style="padding:0 10px 0 0;"><a href="docs/presentation/index.html?slide=10"><img src="docs/presentation/slides/slide-10.png" alt="Slide 10" width="520"></a><p align="center"><sub>Slide 10 of 12</sub></p></td>
-<td valign="top" style="padding:0 10px 0 0;"><a href="docs/presentation/index.html?slide=11"><img src="docs/presentation/slides/slide-11.png" alt="Slide 11" width="520"></a><p align="center"><sub>Slide 11 of 12</sub></p></td>
-<td valign="top" style="padding:0 10px 0 0;"><a href="docs/presentation/index.html?slide=12"><img src="docs/presentation/slides/slide-12.png" alt="Slide 12" width="520"></a><p align="center"><sub>Slide 12 of 12</sub></p></td>
-</tr></table>
-</div>
 
 # Overview
 
