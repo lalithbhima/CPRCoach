@@ -12,6 +12,10 @@
   Submitted to the <strong>Congressional App Challenge</strong> by Lalith Bhima, Bhavika Bhima, and Yihan Duan
 </p>
 
+<h2 align="center">
+  <a href="https://drive.google.com/file/d/16yjRtOaoZGdX443OHn2eNV36CuOopUO-/view?usp=drive_link"><strong>View presentation slides</strong></a>
+</h2>
+
 ---
 
 ## Table of Contents
