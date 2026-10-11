@@ -16,18 +16,15 @@
 
 ## Table of Contents
 
+- [Presentation](#presentation)
 - [Overview](#overview)
   - [Problem Statement](#problem-statement)
   - [Our Solution](#our-solution)
-  - [Why we built it](#why-we-built-it)
-  - [Who it is for](#who-it-is-for)
-  - [Impact we aim for](#impact-we-aim-for)
   - [Features](#features)
 - [Technical Details](#technical-details)
   - [System Architecture](#system-architecture)
   - [AI Models and What They Do](#ai-models-and-what-they-do)
   - [Computer Vision Models](#computer-vision-models)
-  - [Multimodal Fusion and Communication](#multimodal-fusion-and-communication)
   - [Depth and Signal Processing](#depth-and-signal-processing)
   - [Language and Voice Models](#language-and-voice-models)
   - [How the Models Work Together](#how-the-models-work-together)
@@ -64,6 +61,38 @@
 
 ---
 
+## Presentation
+
+Browse our full Congressional App Challenge deck (12 slides). Open the interactive viewer for keyboard and on-screen arrows, or scroll the strip below.
+
+<p align="center">
+  <a href="docs/presentation/index.html"><strong>Open interactive slideshow</strong></a>
+  &nbsp;·&nbsp;
+  <a href="docs/presentation/Presentation.pdf"><strong>Download Presentation.pdf</strong></a>
+</p>
+
+<p align="center">
+  <em>In the slideshow: press <code>→</code> for next, <code>←</code> for previous, or click the arrow buttons. Click any thumbnail below to jump to that slide.</em>
+</p>
+
+<!-- Presentation strip: scroll horizontally; click a slide or use the interactive viewer -->
+<div style="overflow-x:auto; max-width:100%; padding-bottom:8px;">
+<table><tr>
+<td valign="top" style="padding:0 10px 0 0;"><a href="docs/presentation/index.html?slide=1"><img src="docs/presentation/slides/slide-01.png" alt="Slide 1" width="520"></a><p align="center"><sub>Slide 1 of 12</sub></p></td>
+<td valign="top" style="padding:0 10px 0 0;"><a href="docs/presentation/index.html?slide=2"><img src="docs/presentation/slides/slide-02.png" alt="Slide 2" width="520"></a><p align="center"><sub>Slide 2 of 12</sub></p></td>
+<td valign="top" style="padding:0 10px 0 0;"><a href="docs/presentation/index.html?slide=3"><img src="docs/presentation/slides/slide-03.png" alt="Slide 3" width="520"></a><p align="center"><sub>Slide 3 of 12</sub></p></td>
+<td valign="top" style="padding:0 10px 0 0;"><a href="docs/presentation/index.html?slide=4"><img src="docs/presentation/slides/slide-04.png" alt="Slide 4" width="520"></a><p align="center"><sub>Slide 4 of 12</sub></p></td>
+<td valign="top" style="padding:0 10px 0 0;"><a href="docs/presentation/index.html?slide=5"><img src="docs/presentation/slides/slide-05.png" alt="Slide 5" width="520"></a><p align="center"><sub>Slide 5 of 12</sub></p></td>
+<td valign="top" style="padding:0 10px 0 0;"><a href="docs/presentation/index.html?slide=6"><img src="docs/presentation/slides/slide-06.png" alt="Slide 6" width="520"></a><p align="center"><sub>Slide 6 of 12</sub></p></td>
+<td valign="top" style="padding:0 10px 0 0;"><a href="docs/presentation/index.html?slide=7"><img src="docs/presentation/slides/slide-07.png" alt="Slide 7" width="520"></a><p align="center"><sub>Slide 7 of 12</sub></p></td>
+<td valign="top" style="padding:0 10px 0 0;"><a href="docs/presentation/index.html?slide=8"><img src="docs/presentation/slides/slide-08.png" alt="Slide 8" width="520"></a><p align="center"><sub>Slide 8 of 12</sub></p></td>
+<td valign="top" style="padding:0 10px 0 0;"><a href="docs/presentation/index.html?slide=9"><img src="docs/presentation/slides/slide-09.png" alt="Slide 9" width="520"></a><p align="center"><sub>Slide 9 of 12</sub></p></td>
+<td valign="top" style="padding:0 10px 0 0;"><a href="docs/presentation/index.html?slide=10"><img src="docs/presentation/slides/slide-10.png" alt="Slide 10" width="520"></a><p align="center"><sub>Slide 10 of 12</sub></p></td>
+<td valign="top" style="padding:0 10px 0 0;"><a href="docs/presentation/index.html?slide=11"><img src="docs/presentation/slides/slide-11.png" alt="Slide 11" width="520"></a><p align="center"><sub>Slide 11 of 12</sub></p></td>
+<td valign="top" style="padding:0 10px 0 0;"><a href="docs/presentation/index.html?slide=12"><img src="docs/presentation/slides/slide-12.png" alt="Slide 12" width="520"></a><p align="center"><sub>Slide 12 of 12</sub></p></td>
+</tr></table>
+</div>
+
 # Overview
 
 ## Problem Statement
@@ -83,35 +112,11 @@ Most people never learn CPR because they believe it will never happen to them or
 
 ## Our Solution
 
-CPR Coach is an iPhone app that stays with a bystander from the moment someone collapses until help arrives. We built it for the person who has never taken a CPR class, never touched a manikin, and suddenly finds themselves as the only one who can save a life.
+CPR Coach stays with a bystander from the moment someone collapses until help arrives. It talks the rescuer through every decision the way a dispatcher would, watches their compressions through the iPhone camera, and speaks short corrections out loud so they never have to look away from the patient. The same live coach is available for practice, so users can build confidence long before an emergency.
 
-In an emergency, there is no time to read instructions. So instead, CPR Coach talks to the rescuer the way a dispatcher would. It asks whether the scene is safe, whether the person is responding or breathing, and whether the victim is an adult, a child, or an infant. Then it listens to the answer and decides what comes next. Once compressions begin, the camera watches the rescuer’s form and speaks short corrections out loud — push harder, recenter the hands, hold the rhythm — so the rescuer never has to take their eyes off the person they are trying to save.
+Our target audience is everyday people who may witness a cardiac arrest and need immediate CPR guidance before emergency responders arrive.
 
-The app also takes care of the small delays that quietly cost lives. It finds the right emergency number for whatever country the user is in, shows the closest hospitals, and points to the nearest AED using a worldwide database stored right on the phone.
-
-CPR Coach is just as useful before an emergency ever happens. Users can practice with the same live camera coach in an immersive full-screen view, calibrate depth to their own body, and review their corrections after every session. The Learn section walks through assessment, compressions, CPR quality, and AED use out loud, and ChatCPR answers questions and even analyzes live form in many languages.
-
-### Why we built it
-
-CPR is a proven method that can triple the chance of survival. Yet most people never learn it, because they believe cardiac arrest will never happen to them or someone they love. That scenario is not as uncommon as people think, and the scariest part is that there is **no warning**. At the moment of need, people often regret not learning CPR — costing somebody’s life, and leaving their loved ones with the regret of a lifetime.
-
-Our team and many in our community have felt that regret firsthand. We realized that simply telling people to take a class ahead of time is not enough, because there will always be a majority who never do until it is too late. So we asked a different question: what if an unprepared person can still provide high-quality CPR in any moment, with the right guidance in their hand? CPR Coach is our answer.
-
-### Who it is for
-
-Our target audience is everyday people who may witness a cardiac arrest and need immediate guidance before emergency responders arrive — students, parents, coworkers, neighbors, travelers. Whether someone lives in a big city or a rural town, whether they had access to a CPR class or have never seen why learning CPR even mattered, we want them to be able to pull out their phone and act.
-
-Survival should not depend on whether a trained professional happens to be nearby. The person standing right there can be the reason a stranger, a neighbor, or a loved one gets to go home.
-
-### Impact we aim for
-
-Cardiac arrest claims hundreds of thousands of lives each year in the United States and about five million worldwide. Many of those deaths happen outside hospitals, in the minutes before EMS arrives. High-quality bystander CPR is one of the few interventions that can change that outcome on the spot.
-
-CPR Coach aims to close the gap between “I was never trained” and “I can start useful compressions now.” By putting calm voice guidance, live form feedback, and nearest-help tools on a phone people already carry, we believe the app can help bystanders save **millions of lives** over time — not as a clinical claim for any single session, but as the scale of what better access to high-quality CPR makes possible in communities everywhere.
-
-We designed the experience so that panic does not have to mean freeze. One clear question at a time. One clear correction at a time. Practice when life is quiet. Guidance when every second counts.
-
-CPR Coach is a novel multilingual AI-powered app created by **Lalith Bhima**, **Bhavika Bhima**, and **Yihan Duan**. In our demo, a bystander with no training uses CPR Coach to save a life — and our goal is for that story to become ordinary.
+CPR Coach is a novel multilingual AI-powered app created by **Lalith Bhima**, **Bhavika Bhima**, and **Yihan Duan**. In our demo, a bystander with no training uses CPR Coach to save a life, and our goal is for the app to help save millions more.
 
 ## Features
 
@@ -180,26 +185,6 @@ CPR Coach is not one model. It is a set of AI models and algorithms that each ha
 | **Apple Vision Hand Pose** | Tracks fingers and palms. Used to tell whether hands are stacked correctly, clenched into a fist, or only one hand is on the chest. |
 | **Rescuer and Patient Classifier** | Our own scoring logic. Scores each person by posture, since the rescuer kneels upright and the patient lies flat, then locks onto the rescuer for the whole session. |
 | **CPR Error Recognition Engine** | Our own 14-class recognizer that labels each moment of CPR as correct or as a specific mistake. See [CPR Error Recognition and Confidence](#cpr-error-recognition-and-confidence). |
-
-### Multimodal Fusion and Communication
-
-The four vision modalities do not publish separate UIs. They write into one shared scene object each frame, and every coaching surface reads from that object.
-
-**Frame entry.** `CameraViewModel` owns the capture path. On standard iPhones it pulls `CMSampleBuffer` frames from `AVCaptureSession`. On LiDAR Pro devices it switches to an `ARSession` with scene depth, converts each `ARFrame` into a portrait-up pixel buffer, and runs the same analyzer. Either way, analysis runs on a background queue so the SwiftUI preview stays at interactive frame rate.
-
-**Per-frame fusion hub.** `MultiPersonPoseAnalyzer` is the only place the modalities meet:
-
-1. **YOLOv11** runs first as a `VNCoreMLRequest` on the bundled `yolo11n` Core ML package (NMS already inside the model). Detections are filtered to CPR-relevant labels and confidence ≥ 0.30. Person boxes become optional patient candidates later.
-2. **MoveNet Thunder** runs next through TensorFlow Lite (256×256 letterboxed input). If shoulders are visible, that pose becomes the primary skeleton and later wrist refinement prefers MoveNet over hand-pose merges.
-3. **Apple Vision** always runs human-rectangle and hand-pose requests on the same `VNImageRequestHandler`. Body pose runs only when MoveNet is not loaded or produced no usable skeleton, so Vision is a true fallback rather than a competing primary.
-4. **Association.** Each skeleton is scored against Vision person boxes by center overlap. Rescuer vs patient scoring uses upright-arm confidence for the rescuer and horizontal torso geometry for the patient. If Vision misses a lying body but YOLO has a horizontal person box below the rescuer’s shoulders, that YOLO box feeds `CPRChestTargetEstimator` for the green chest target.
-5. **Temporal lock.** `PoseTrackingFilter` (One Euro per joint plus short occlusion hold) keeps the rescuer identity sticky across frames so the blue skeleton does not jump mid-compression.
-
-**Shared payload.** The analyzer returns a single `CPRSceneAnalysis`: smoothed rescuer skeleton, patient detection / chest target, rescuer box confidence, hand poses, person count (`max` of skeletons, Vision rects, and YOLO persons), detection quality, raw MoveNet pose for overlay, and YOLO detections / active flag. `CameraViewModel.processScene` is the only consumer of that struct for live coaching.
-
-**Downstream handoff.** From `processScene`, joints go to `CPRMetricsEngine` (rate / depth / elbows / placement / recoil). When LiDAR scene depth is present, depth fuses as approximately **0.72 × LiDAR + 0.28 × camera amplitude** before calibration scaling. Metrics plus the scene feed `CPRActionRecognitionEngine` and `RealTimeCPRResponseEngine`, which emit one spoken cue through `VoiceCoach`. Detection quality shown in the Coach pills includes small bonuses when MoveNet and YOLO contributed that frame. Emergency Voice, ChatCPR, and Progress do not re-run vision; they read the same live metrics / scene state the Coach already produced.
-
-**Coordinate contract.** All boxes and joints stay in Vision-normalized space (origin bottom-left, 0–1). Overlay code maps that space onto the preview using MoveNet’s portrait frame size when available, so YOLO boxes, Vision rects, and MoveNet keypoints stay aligned without a second transform stage.
 
 ### Depth and Signal Processing
 
